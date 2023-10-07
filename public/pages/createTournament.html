@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Tournament</title>
+    <link rel="stylesheet" href="../css/masterStyles.css">
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnyJ1v1LaFAan_gaf-pbsnqqnbzLFXME8",
+            authDomain: "cisc472-tournament-app.firebaseapp.com",
+            projectId: "cisc472-tournament-app",
+            storageBucket: "cisc472-tournament-app.appspot.com",
+            messagingSenderId: "77193216760",
+            appId: "1:77193216760:web:50cfd95392f1bc8cb4710d"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href ="searchPage.html">Find a Tournament</a>
+        <a href="discoverPage.html">Discover Events</a>
+        <a href="upcomingEventPage.html">Upcoming Events</a>
+        <a href="createTournamentPage.html">Create a Tournament</a>
+        <a href="loginPage.html">Profile</a>
+    </div>
+
+    <div class="tournamentForm">
+        <form id="tournamentForm">
+            <div>
+                <label for="tourneyNameInput">Tournament Name</label>
+                <input type="text" id="tourneyNameInput" name="tourneyName" placeholder="Super Cool Tournament">
+            </div>
+            <div>
+                <label for="tourneyDescriptInput">Tournament Description</label>
+                <textarea id="tourneyDescriptInput" name="tourney_description" placeholder="Tournament Description"></textarea>
+            </div>
+            <div>
+                <label for="tourneyRulesInput">Tournament Rules</label>
+                <textarea id="tourneyRulesInput" name="tourneyRules" placeholder="Any Rules here"></textarea>
+            </div>
+            <div>
+                <label for="startDateTimeInput">Start Date</label>
+                <input type="datetime-local" id="startDateTimeInput" name="tournament-start" />
+            </div>
+            <div>
+                <label for="endDateTimeInput">End Date</label>
+                <input type="datetime-local" id="endDateTimeInput" name="tournament-end" />
+            </div>
+            <div>
+                <label for="emailInput">Primary Contact Email Address</label>
+                <input type="text" id="emailInput" name="user_email" placeholder="xyz@domain.com" title="xyz@domain.<upper-domain> required">
+            </div>
+            <div>
+                <!--I want to eventually have the options read from a database, in alphabetically order (ability to sort in the bar, click enter to add a new game)-->
+                <!---->
+                <label for="gameNameSelect">Game</label>
+                <select name="gameName" id="gameNameSelect">
+                    <option disabled selected value> -- Please select a game or input one below --</option>
+                    <option value="armWrestling">Arm Wrestling</option>
+                    <option value="rockPaperScissors">Rock, Paper, Scissors</option>
+                    <option value="soccer">Soccer</option>
+                    <option value="football">Football</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="tableTennis">Table Tennis</option>
+                    <option value="badminton">Badminton</option>
+                    <option value="golf">Golf</option> 
+                    <option value="volleyball">Volleyball</option>
+                    <option value="bowling">Bowling</option>
+                    <option value="dungeonsAndDragons">Dungeons and Dragons</option>
+                    <option value="poker">Poker</option>
+                    <option value="chess">Chess</option>
+                    <option value="Monopoly">monopoly</option>
+                    <option value="superSmashBros">Super Smash Bros</option>
+                    <option value="marioKart">Mario Kart</option>
+                    <option value="nba">NBA 2k</option>
+                    <option value="leagueOfLegends">League of Legends</option> 
+                    <option value="rainbowSixSiege">Rainbow Six Siege</option>
+                    <option value="overwatch">Overwatch</option>
+                    <option value="fortnite">Fortnite</option>
+                    <option value="apexLegends">Apex Legends</option>
+                    <option value="callOfDuty">Call of Duty: Warzone</option>
+                </select>
+                <!--<label for="gameInput">Game</label>
+                <input list="games" id="gameInput" placeholder="Enter or Select a game">
+                <datalist id="games">
+                    <option disabled selected value> -- Please select a game or input one below --</option>
+                    <option value="Arm Wrestling">
+                    <option value="Rock, Paper, Scissors">
+                    <option value="Soccer">
+                    <option value="Football">
+                    <option value="Basketball">
+                    <option value="Tennis">
+                    <option value="Table Tennis">
+                    <option value="Badminton">
+                    <option value="Golf">
+                    <option value="Volleyball">
+                    <option value="Bowling">
+                    <option value="Dungeons and Dragons">
+                    <option value="Poker">
+                    <option value="Chess">
+                    <option value="Monopoly">
+                    <option value="Super Smash Bros">
+                    <option value="Mario Kart">
+                    <option value="NBA 2k">
+                    <option value="League of Legends">
+                    <option value="Rainbow Six Siege">
+                    <option value="Overwatch">
+                    <option value="Fortnite">
+                    <option value="Apex Legends">
+                    <option value="Call of Duty: Warzone">
+                </datalist>
+            </div>-->
+            <div>
+                <label for="manualInputGame">Don't See the Game You're Looking For?</label>
+                <input type="text" id="manualInputGame" name="manualGame" placeholder="Some Super Cool Game Not Listed">
+            </div>
+            <div>
+                <label for="tourneyTypeSelect">Tournament Type</label>
+                <select name="tourneyType" id="tourneyTypeSelect">
+                    <option value="singleElimination">Single Elimination</option>
+                    <option value="doubleElimination">Double Elimination</option>
+                    <option value="roundRobin">Round Robin</option>
+                    <option value="swiss">Swiss</option>
+                    <option value="leagueFormat">League Format</option>
+                    <option value="freeForAll">Free-for-All</option>
+                </select>
+            </div>
+            <!--<div>
+                <label for="playerInput">Add Players</label>
+                <textarea id="playerInput" name="tourneyPlayers" placeholder="Please enter the names of the players participating separated by a comma (',')"></textarea>
+            </div>-->
+            <div class="checkboxes">
+                <input type="checkbox" id="soloCheckbox" name="solos">
+                <label for="soloCheckbox">Solo Tournament?</label>
+            </div>
+            <div id= hiddenInputForSolo class="hidden">
+                <div>
+                    <label for="soloHeadCountInput">Tournament Head Count</label>
+                    <input type="number" id="soloHeadCountInput" name="soloHeadCount" />
+                </div>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="teamsCheckbox" name="teams" value="teamTourney">
+                <label for="teamsCheckbox">Team Tournament?</label>
+            </div>
+            <div id = "hiddenInputForTeamRegistration" class="hidden">
+                <div>
+                    <label for="numberOfTeamsInput">How many Teams?</label>
+                    <input type="number" id="numberOfTeamsInput" name="numberOfTeams" />
+                </div>
+                <div>
+                    <label for="playersPerTeamInput">How many players per team?</label>
+                    <input type="number" id="playersPerTeamInput" name="playersPerTeam" />
+                </div>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="openForRegistrationCheckbox" name="registration" value="openForRegistration">
+                <label for="openForRegistrationCheckbox">Open for Registration?</label>
+            </div>
+            <div id="hiddenInputForRegistration" class="hidden">
+                <div>
+                    <label for="registrationLockDate">Registration Lock Date</label>
+                    <input type="datetime-local" id="soloRegistrationLockDate" name="solo-registration-lock-date" />
+                </div>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="onlineCheckbox" name="online" value="onlineTourney">
+                <label for="onlineCheckbox">Online Tournament?</label>
+            </div>
+            <div id="hiddenInputForOnlineCheckbox" class="hidden">
+                <div>
+                    <div>
+                        <label for="onlinePlatformSelect">Platform</label>
+                        <select name="onlinePlatform" id="onlinePlatformSelect">
+                            <option value="platform1">Platform 1</option>
+                            <option value="platform2">Platform 2</option>
+                            <option value="platform3">Platform 3</option>
+                            <option value="platform4">Platform 4</option>
+                            <option value="platform5">Platform 5</option>
+                            <option value="platform6">Platform 6</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="checkboxes">
+                    <input type="checkbox" id="streamingCheckbox" name="streamingTourney" value="streaming">
+                    <label for="streamingCheckbox" style="display:flex">Streaming Tournament?</label>
+                </div>
+            </div>
+            <div id="hiddenInputForStreaming" class="hidden">
+                <label for="streamingServiceInput">Streaming Service</label>
+                <input type="text" id="streamingServiceInput" name="streamingService" placeholder="Youtube/Twitch/etc...">
+                <label for="streamingUserInput">User Name</label>
+                <input type="text" id="streamingUserInput" name="streamingUser" placeholder="superCoolUser">
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="entryFeeCheckbox" name="entryFee" value="entryFee">
+                <label for="entryFeeCheckbox">Entry Fee?</label>
+            </div>
+            <div id="hiddenInputForEntryFee" class="hidden">
+                <!--Want to add currency for others-->
+                <label for="entryFeeAmtInput">Amount (in USD)</label>
+                <input type="number" id="entryFeeAmtInput" name="entryFeeAmt" />
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="prizesCheckbox" name="prizes" value="prizes">
+                <label for="prizesCheckbox">Prizes?</label>
+            </div>
+            <div id="hiddenInputForPrizes" class="hidden">
+                <label for="prizeDescriptionInput">Prize Description</label>
+                <textarea id="prizeDescriptionInput" name="prizeDescription" placeholder="Description + Distribution (70% for 1st, 20% for 2nd, 10% for 3rd) of prizes for winners"></textarea>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="publicTourneyCheckbox" name="publicTourney" value="publicTourney">
+                <label for="publicTourneyCheckbox" style="display:flex">Public?</label>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="autoGenerateBracketsCheckbox" name="autoGenerate" value="autogenerate">
+                <label for="autoGenerateBracketsCheckbox" style="display:flex">Auto-generate Brackets?</label>
+            </div>
+            <button type="submit" id="submitButton">Create Tournament</button>
+        </form>
+    </div>
+    <script type="module" src="../js/createTournament.js"></script>
+</body>
+</html>
