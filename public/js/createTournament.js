@@ -1,5 +1,24 @@
 const db = firebase.firestore();
 
+/*window.onload = function(){
+    const path = window.location.pathname;
+    const segments = path.split('/');
+
+    if(segments[1] === 'tournament' && segments[2]){
+        const tournamentId = segments[2];
+        db.collection("tournaments").doc(tournamentId).get().then((doc) => {
+            if(doc.exists){
+                console.log("Tournament Data:", doc.data());
+            }else{
+                //handle error
+                console.log('Cant be found')
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        })
+    }
+}*/
+
 let soloPlayers = document.getElementById('soloCheckbox');
 let teamPlayers = document.getElementById('teamsCheckbox');
 let openForRegistration = document.getElementById('openForRegistrationCheckbox');
@@ -152,7 +171,18 @@ form.addEventListener('submit', function(event){
         prizesDescript: getValue('prizeDescriptionInput', 'There are no prizes for this tournament'),
         public: getCheckboxValue('publicTourneyCheckbox'),
         autoGenerateBrackets: getCheckboxValue('autoGenerateBracketsCheckbox')
-    })
+    }).then((docRef) => {
+        /*console.log("Document written with ID:", docRef.id);
+        const baseUrl = window.location.origin; // gets the base URL (e.g., https://yourwebsite.com)
+        console.log("baseURL: ", baseUrl);
+        const uniqueTournamentURL = `${baseUrl}/tournament.html?id=/${docRef.id}`;
+        console.log("unique URL: ", uniqueTournamentURL);*/
+    
+        // Redirect the user to the new page
+        window.location.href = "/pages/tournament.html?id=" + docRef.id;;
+    }).catch((error) => {
+        console.log("Error adding document: ", error);
+    });
 })
 
 
