@@ -1,0 +1,102 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.tournament-details {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-radius: 15px;
+    border-left: 5px solid #0077cc;
+}
+
+.tourney-title {
+    border-bottom: 3px dashed #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #0077cc;
+    align-items: center;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #555;
+    background: linear-gradient(90deg, rgba(0,119,204,0.2) 0%, rgba(0,119,204,0) 100%);
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 8px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li > strong {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #555;
+}
+
+.countdown-section {
+    background-color: #0077cc;
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#countdown {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.registration button {
+    background-color: #0077cc;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.registration button:hover {
+    background-color: #005fa3;
+}
+
+.registered-users {
+    margin-top: 20px;
+}
+
+.registered-users h3 {
+    color: #555;
+    border-bottom: 2px dashed #e0e0e0;
+    padding-bottom: 10px;
+}
+
+
+

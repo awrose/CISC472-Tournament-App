@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In/Register</title>
+    <link rel="stylesheet" href="../css/masterStyles.css">
+    <link rel="stylesheet" href="../css/logInSignUp.css">
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href ="searchPage.html">Find a Tournament</a>
+        <a href="discoverPage.html">Discover Events</a>
+        <a href="upcomingEventPage.html">Upcoming Events</a>
+        <a href="createTournament.html">Create a Tournament</a>
+        <a href="logInSignUp.html">Profile</a>
+    </div>
+    <div class="forms-container">
+        <div class="auth-container">
+            <h1>Welcome</h1>
+            <p>Register</p>
+            <form id="registerForm">
+                <input type="text" id="registerName" placeholder="Name">
+                <input type="email" id="registerEmail" placeholder="Email">
+                <input type="password" id="registerPassword" placeholder="Password">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    
+        <div class="auth-container">
+            <h1>Welcome</h1>
+            <p>Sign In</p>
+            <form id="signInForm">
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="profile-container" style="display: none;">
+        <h2 id="user-name"></h2>
+        <p id="user-email"></p>
+        <button onclick="logOut()">Log Out</button>
+    </div>
+
+
+    <script src="../js/firebaseInit.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>
+

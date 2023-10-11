@@ -48,13 +48,14 @@ body{
     font-weight: bold;
   }
 
-  input[type=text], input[type=datetime-local], select, input[type=number]{
+  input[type=text], input[type=email], input[type=password], input[type=datetime-local], select, input[type=number]{
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    box-sizing: border-box;
   }
 
   textarea{
@@ -103,3 +104,39 @@ body{
   .conditionalInput{
     color: gray;
   }
+
+  /* Basic modal styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); /* Black with opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* Center it */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Define a width if you want */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+

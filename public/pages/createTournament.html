@@ -6,18 +6,7 @@
     <link rel="stylesheet" href="../css/masterStyles.css">
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBnyJ1v1LaFAan_gaf-pbsnqqnbzLFXME8",
-            authDomain: "cisc472-tournament-app.firebaseapp.com",
-            projectId: "cisc472-tournament-app",
-            storageBucket: "cisc472-tournament-app.appspot.com",
-            messagingSenderId: "77193216760",
-            appId: "1:77193216760:web:50cfd95392f1bc8cb4710d"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -25,7 +14,7 @@
         <a href="discoverPage.html">Discover Events</a>
         <a href="upcomingEventPage.html">Upcoming Events</a>
         <a href="createTournamentPage.html">Create a Tournament</a>
-        <a href="loginPage.html">Profile</a>
+        <a href="logInSignUp.html">Profile</a>
     </div>
 
     <div class="tournamentForm">
@@ -85,36 +74,6 @@
                     <option value="apexLegends">Apex Legends</option>
                     <option value="callOfDuty">Call of Duty: Warzone</option>
                 </select>
-                <!--<label for="gameInput">Game</label>
-                <input list="games" id="gameInput" placeholder="Enter or Select a game">
-                <datalist id="games">
-                    <option disabled selected value> -- Please select a game or input one below --</option>
-                    <option value="Arm Wrestling">
-                    <option value="Rock, Paper, Scissors">
-                    <option value="Soccer">
-                    <option value="Football">
-                    <option value="Basketball">
-                    <option value="Tennis">
-                    <option value="Table Tennis">
-                    <option value="Badminton">
-                    <option value="Golf">
-                    <option value="Volleyball">
-                    <option value="Bowling">
-                    <option value="Dungeons and Dragons">
-                    <option value="Poker">
-                    <option value="Chess">
-                    <option value="Monopoly">
-                    <option value="Super Smash Bros">
-                    <option value="Mario Kart">
-                    <option value="NBA 2k">
-                    <option value="League of Legends">
-                    <option value="Rainbow Six Siege">
-                    <option value="Overwatch">
-                    <option value="Fortnite">
-                    <option value="Apex Legends">
-                    <option value="Call of Duty: Warzone">
-                </datalist>
-            </div>-->
             <div>
                 <label for="manualInputGame">Don't See the Game You're Looking For?</label>
                 <input type="text" id="manualInputGame" name="manualGame" placeholder="Some Super Cool Game Not Listed">
@@ -130,11 +89,7 @@
                     <option value="freeForAll">Free-for-All</option>
                 </select>
             </div>
-            <!--<div>
-                <label for="playerInput">Add Players</label>
-                <textarea id="playerInput" name="tourneyPlayers" placeholder="Please enter the names of the players participating separated by a comma (',')"></textarea>
-            </div>-->
-            <div class="checkboxes">
+<!--         <div class="checkboxes">
                 <input type="checkbox" id="soloCheckbox" name="solos">
                 <label for="soloCheckbox">Solo Tournament?</label>
             </div>
@@ -157,7 +112,7 @@
                     <label for="playersPerTeamInput">How many players per team?</label>
                     <input type="number" id="playersPerTeamInput" name="playersPerTeam" />
                 </div>
-            </div>
+            </div>-->
             <div class="checkboxes">
                 <input type="checkbox" id="openForRegistrationCheckbox" name="registration" value="openForRegistration">
                 <label for="openForRegistrationCheckbox">Open for Registration?</label>
@@ -165,7 +120,7 @@
             <div id="hiddenInputForRegistration" class="hidden">
                 <div>
                     <label for="registrationLockDate">Registration Lock Date</label>
-                    <input type="datetime-local" id="soloRegistrationLockDate" name="solo-registration-lock-date" />
+                    <input type="datetime-local" id="registrationLockDate" name="solo-registration-lock-date" />
                 </div>
             </div>
             <div class="checkboxes">
@@ -225,6 +180,7 @@
             <button type="submit" id="submitButton">Create Tournament</button>
         </form>
     </div>
+    <script src="../js/firebaseInit.js"></script>
     <script type="module" src="../js/createTournament.js"></script>
 </body>
 </html>

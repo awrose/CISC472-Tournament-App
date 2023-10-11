@@ -1,0 +1,75 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fc;
+}
+
+.auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    position: static;
+    transform: none;
+    min-height:300px;
+}
+
+h1 {
+    margin-top: 0;
+    color: #333;
+    font-size: 24px;
+}
+
+.forms-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Viewport Height */ 
+}
+
+/* ... Your other styles ... */
+
+#profile-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+#profile-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#profile-container p {
+    color: #555;
+    font-size: 18px;
+}
+
+#profile-container button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#profile-container button:hover {
+    background-color: #0056b3;  /* Darken the color a bit on hover */
+}
+

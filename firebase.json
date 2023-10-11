@@ -12,7 +12,7 @@
     ],
     "rewrites": [
       {
-        "source": "!/pages/tournament.html**",
+        "source": "***",
         "destination": "/index.html"
       }
     ]
