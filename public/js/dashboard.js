@@ -12,6 +12,7 @@ firebase.auth().onAuthStateChanged(function(user){
         userEmail = user.email;
         userDisplayName = user.displayName || 'Nameless User';
     }else{
+        window.location.href = "../pages/logInSinUp.html"
         console.log('The user is not signed in');
     }
 });

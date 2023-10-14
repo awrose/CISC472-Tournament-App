@@ -12,6 +12,8 @@ firebase.auth().onAuthStateChanged(function(user){
         userEmail = user.email;
         userDisplayName = user.displayName;
     }else{
+        sessionStorage.setItem('redirectTo', window.location.href);
+        window.location.href = "../pages/logInSignUp.html"
         console.log('The user is not signed in');
     }
 });

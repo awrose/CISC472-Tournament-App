@@ -108,8 +108,16 @@ firebase.auth().onAuthStateChanged(user => {
 function handleUserState(user){
     const formsContainer = document.querySelector('.forms-container');
     const profileContainer = document.getElementById('profile-container');
+    
 
     if (user && user.displayName) {
+        const redirectURL = sessionStorage.getItem('redirectTo');
+
+        if(redirectURL){
+            sessionStorage.removeItem('redirectTo');
+            window.location.href = redirectURL;
+            return
+        }
         displayUserProfile(user);
         console.log(user.displayName);
         formsContainer.style.display = 'none';
@@ -120,5 +128,4 @@ function handleUserState(user){
     }
 
 }
-
 
