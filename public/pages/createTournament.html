@@ -32,20 +32,14 @@
                 <textarea id="tourneyRulesInput" name="tourneyRules" placeholder="Any Rules here"></textarea>
             </div>
             <div>
-                <label for="startDateTimeInput">Start Date</label>
+                <label for="startDateTimeInput">Start Date + Time</label>
                 <input type="datetime-local" id="startDateTimeInput" name="tournament-start" />
-            </div>
-            <div>
-                <label for="endDateTimeInput">End Date</label>
-                <input type="datetime-local" id="endDateTimeInput" name="tournament-end" />
             </div>
             <div>
                 <label for="emailInput">Primary Contact Email Address</label>
                 <input type="text" id="emailInput" name="user_email" placeholder="xyz@domain.com" title="xyz@domain.<upper-domain>">
             </div>
             <div>
-                <!--I want to eventually have the options read from a database, in alphabetically order (ability to sort in the bar, click enter to add a new game)-->
-                <!---->
                 <label for="gameNameSelect">Game</label>
                 <select name="gameName" id="gameNameSelect">
                     <option disabled selected value> -- Please select a game or input one below --</option>
@@ -89,68 +83,21 @@
                     <option value="freeForAll">Free-for-All</option>
                 </select>
             </div>
-<!--         <div class="checkboxes">
-                <input type="checkbox" id="soloCheckbox" name="solos">
-                <label for="soloCheckbox">Solo Tournament?</label>
-            </div>
-            <div id= hiddenInputForSolo class="hidden">
-                <div>
-                    <label for="soloHeadCountInput">Tournament Head Count</label>
-                    <input type="number" id="soloHeadCountInput" name="soloHeadCount" />
-                </div>
-            </div>
-            <div class="checkboxes">
-                <input type="checkbox" id="teamsCheckbox" name="teams" value="teamTourney">
-                <label for="teamsCheckbox">Team Tournament?</label>
-            </div>
-            <div id = "hiddenInputForTeamRegistration" class="hidden">
-                <div>
-                    <label for="numberOfTeamsInput">How many Teams?</label>
-                    <input type="number" id="numberOfTeamsInput" name="numberOfTeams" />
-                </div>
-                <div>
-                    <label for="playersPerTeamInput">How many players per team?</label>
-                    <input type="number" id="playersPerTeamInput" name="playersPerTeam" />
-                </div>
-            </div>-->
-            <div class="checkboxes">
-                <input type="checkbox" id="openForRegistrationCheckbox" name="registration" value="openForRegistration">
-                <label for="openForRegistrationCheckbox">Open for Registration?</label>
-            </div>
-            <div id="hiddenInputForRegistration" class="hidden">
-                <div>
-                    <label for="registrationLockDate">Registration Lock Date</label>
-                    <input type="datetime-local" id="registrationLockDate" name="solo-registration-lock-date" />
-                </div>
-            </div>
             <div class="checkboxes">
                 <input type="checkbox" id="onlineCheckbox" name="online" value="onlineTourney">
                 <label for="onlineCheckbox">Online Tournament?</label>
             </div>
-            <div id="hiddenInputForOnlineCheckbox" class="hidden">
-                <div>
-                    <div>
-                        <label for="onlinePlatformSelect">Platform</label>
-                        <select name="onlinePlatform" id="onlinePlatformSelect">
-                            <option value="platform1">Platform 1</option>
-                            <option value="platform2">Platform 2</option>
-                            <option value="platform3">Platform 3</option>
-                            <option value="platform4">Platform 4</option>
-                            <option value="platform5">Platform 5</option>
-                            <option value="platform6">Platform 6</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="checkboxes">
-                    <input type="checkbox" id="streamingCheckbox" name="streamingTourney" value="streaming">
-                    <label for="streamingCheckbox" style="display:flex">Streaming Tournament?</label>
-                </div>
+            <div class="checkboxes">
+                <input type="checkbox" id="streamingCheckbox" name="streamingTourney" value="streaming">
+                <label for="streamingCheckbox" style="display:flex">Streaming Tournament?</label>
             </div>
             <div id="hiddenInputForStreaming" class="hidden">
                 <label for="streamingServiceInput">Streaming Service</label>
                 <input type="text" id="streamingServiceInput" name="streamingService" placeholder="Youtube/Twitch/etc...">
                 <label for="streamingUserInput">User Name</label>
                 <input type="text" id="streamingUserInput" name="streamingUser" placeholder="superCoolUser">
+                <label for="streamingServiceLink">Link to Stream</label>
+                <input type="text" id="streamingServiceLink" name="streamingLink" placeholder="https://twitch.com">
             </div>
             <div class="checkboxes">
                 <input type="checkbox" id="entryFeeCheckbox" name="entryFee" value="entryFee">

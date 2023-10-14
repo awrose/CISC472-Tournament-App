@@ -14,9 +14,17 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
             // Update the user's display name after successful registration
             var user = userCredential.user;
 
+            //formsContainer.style.display = 'none';
+            //profileContainer.style.display = 'block';
+
             return user.updateProfile({
                 displayName: name
+            }).then(() => {
+                console.log('just updated the profile');
+                handleUserState(user);
+                //window.location.
             });
+
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -94,10 +102,14 @@ document.getElementById('forgotPassword').addEventListener('click', function(eve
 
 // Authentication State Logic
 firebase.auth().onAuthStateChanged(user => {
+    handleUserState(user);
+});
+
+function handleUserState(user){
     const formsContainer = document.querySelector('.forms-container');
     const profileContainer = document.getElementById('profile-container');
 
-    if (user) {
+    if (user && user.displayName) {
         displayUserProfile(user);
         console.log(user.displayName);
         formsContainer.style.display = 'none';
@@ -106,6 +118,7 @@ firebase.auth().onAuthStateChanged(user => {
         profileContainer.style.display = 'none';
         formsContainer.style.display = 'flex';
     }
-});
+
+}
 
 

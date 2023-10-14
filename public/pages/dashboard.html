@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Tournament</title>
+    <link rel="stylesheet" href="../css/masterStyles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href ="searchPage.html">Find a Tournament</a>
+        <a href="discoverPage.html">Discover Events</a>
+        <a href="upcomingEventPage.html">Upcoming Events</a>
+        <a href="createTournament.html">Create a Tournament</a>
+        <a href="logInSignUp.html">Profile</a>
+    </div>
+
+    <!-- Tab Titles -->
+    <div class="tabs">
+        <button class="tablink" onclick="openTab('editTourney', this)">Edit Tourney</button>
+        <button class="tablink" onclick="openTab('registrants', this)">Registrants</button>
+        <button class="tablink" onclick="openTab('bracket', this)">Bracket</button>
+    </div>
+
+    <div id="editTourney" class="tabcontent">
+        <div>
+            <div>
+                <form id="tournamentForm">
+                     <div>
+                        <label for="tourneyNameInput">Tournament Name</label>
+                        <input type="text" id="tourneyNameInput" name="tourneyName" placeholder="Super Cool Tournament">
+                    </div>
+                    <div>
+                        <label for="tourneyDescriptInput">Tournament Description</label>
+                        <textarea id="tourneyDescriptInput" name="tourney_description" placeholder="Tournament Description"></textarea>
+                    </div>
+                    <div>
+                        <label for="tourneyRulesInput">Tournament Rules</label>
+                        <textarea id="tourneyRulesInput" name="tourneyRules" placeholder="Any Rules here"></textarea>
+                    </div>
+                <div>
+                        <label for="startDateTimeInput">Start Date + Time</label>
+                        <input type="datetime-local" id="startDateTimeInput" name="tournament-start" />
+                    </div>
+                    <div>
+                        <label for="emailInput">Primary Contact Email Address</label>
+                        <input type="text" id="emailInput" name="user_email" placeholder="xyz@domain.com" title="xyz@domain.<upper-domain>">
+                    </div>
+                    <div>
+                        <label for="gameNameSelect">Game</label>
+                        <select name="gameName" id="gameNameSelect">
+                            <option disabled selected value> -- Please select a game or input one below --</option>
+                            <option value="armWrestling">Arm Wrestling</option>
+                            <option value="rockPaperScissors">Rock, Paper, Scissors</option>
+                            <option value="soccer">Soccer</option>
+                            <option value="football">Football</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="tennis">Tennis</option>
+                            <option value="tableTennis">Table Tennis</option>
+                            <option value="badminton">Badminton</option>
+                            <option value="golf">Golf</option> 
+                            <option value="volleyball">Volleyball</option>
+                            <option value="bowling">Bowling</option>
+                            <option value="dungeonsAndDragons">Dungeons and Dragons</option>
+                            <option value="poker">Poker</option>
+                            <option value="chess">Chess</option>
+                            <option value="Monopoly">monopoly</option>
+                            <option value="superSmashBros">Super Smash Bros</option>
+                            <option value="marioKart">Mario Kart</option>
+                            <option value="nba">NBA 2k</option>
+                            <option value="leagueOfLegends">League of Legends</option> 
+                            <option value="rainbowSixSiege">Rainbow Six Siege</option>
+                            <option value="overwatch">Overwatch</option>
+                            <option value="fortnite">Fortnite</option>
+                            <option value="apexLegends">Apex Legends</option>
+                            <option value="callOfDuty">Call of Duty: Warzone</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="manualInputGame">Don't See the Game You're Looking For?</label>
+                        <input type="text" id="manualInputGame" name="manualGame" placeholder="Some Super Cool Game Not Listed">
+                    </div>
+                    <div>
+                        <label for="tourneyTypeSelect">Tournament Type</label>
+                        <select name="tourneyType" id="tourneyTypeSelect">
+                            <option value="singleElimination">Single Elimination</option>
+                            <option value="doubleElimination">Double Elimination</option>
+                            <option value="roundRobin">Round Robin</option>
+                            <option value="swiss">Swiss</option>
+                            <option value="leagueFormat">League Format</option>
+                            <option value="freeForAll">Free-for-All</option>
+                        </select>
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="onlineCheckbox" name="online" value="onlineTourney">
+                        <label for="onlineCheckbox">Online Tournament?</label>
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="streamingCheckbox" name="streamingTourney" value="streaming">
+                        <label for="streamingCheckbox" style="display:flex">Streaming Tournament?</label>
+                    </div>
+                    <div id="hiddenInputForStreaming" class="hidden">
+                        <label for="streamingServiceInput">Streaming Service</label>
+                        <input type="text" id="streamingServiceInput" name="streamingService" placeholder="Youtube/Twitch/etc...">
+                        <label for="streamingUserInput">User Name</label>
+                        <input type="text" id="streamingUserInput" name="streamingUser" placeholder="superCoolUser">
+                        <label for="streamingServiceLink">Link to Stream</label>
+                        <input type="text" id="streamingServiceLink" name="streamingLink" placeholder="https://twitch.com">
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="entryFeeCheckbox" name="entryFee" value="entryFee">
+                        <label for="entryFeeCheckbox">Entry Fee?</label>
+                    </div>
+                    <div id="hiddenInputForEntryFee" class="hidden">
+                        <label for="entryFeeAmtInput">Amount (in USD)</label>
+                        <input type="number" id="entryFeeAmtInput" name="entryFeeAmt" />
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="prizesCheckbox" name="prizes" value="prizes">
+                        <label for="prizesCheckbox">Prizes?</label>
+                    </div>
+                    <div id="hiddenInputForPrizes" class="hidden">
+                        <label for="prizeDescriptionInput">Prize Description</label>
+                        <textarea id="prizeDescriptionInput" name="prizeDescription" placeholder="Description + Distribution (70% for 1st, 20% for 2nd, 10% for 3rd) of prizes for winners"></textarea>
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="publicTourneyCheckbox" name="publicTourney" value="publicTourney">
+                        <label for="publicTourneyCheckbox" style="display:flex">Public?</label>
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="autoGenerateBracketsCheckbox" name="autoGenerate" value="autogenerate">
+                        <label for="autoGenerateBracketsCheckbox" style="display:flex">Auto-generate Brackets?</label>
+                    </div>
+                    <button type="submit" id="submitButton">Update Tournament</button> 
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="registrants" class="tabcontent">
+        <button id="addRegistrantButton">Add Registrant</button>
+        <div id="registrantsContainer"></div>
+    </div>
+    
+    <div id="bracket" class="tabcontent">
+        <h3>Tab 3</h3>
+        <p>This is the content for Tab 3.</p>
+    </div>
+
+
+<script src = "../js/firebaseInit.js"></script>
+<script src="../js/dashboard.js"></script> 
+
+</body>
+</html>

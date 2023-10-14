@@ -1,0 +1,68 @@
+/* Tab Styles */
+.tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    margin-right: 2px;
+    width: 33.33%;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+.tabcontent {
+    color: #555;
+    display: none;
+    padding: 50px 20px;
+    height: 100%;
+}
+
+.active-tab {
+    background-color: #ddd;
+    color: black;
+}
+
+
+.tabs {
+    display: flex;
+    justify-content: start;
+}
+
+/* Styles for the registrant-box container */
+.registrant-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+/* Styling for the registrant's information */
+.registrant-info strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Delete button styling */
+.delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}

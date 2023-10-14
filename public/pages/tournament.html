@@ -29,9 +29,9 @@
     </section>
 
     <div class="tournament-details">
+        <button class="edit-button" id="editButton">Edit Tournament</button>
         <h1 class="tourney-title">Tournament: <span id="tourneyNameInput">This tournament doesn't have a name</span></h1>
         <h4>Organized By: <span id="organizerNameInput"><span id="organizerEmailInput"></span></h4>
-        
 
         <section class="description">
             <h2>Description</h2>
@@ -45,40 +45,28 @@
                 <li><strong>Game:</strong> <span id="gameInput">There is no game selected yet</span></li>
                 <li><strong>Type:</strong> <span id="tourneyTypeSelect">This tournament doesn't have a selected type</span></li>
                 <li><strong>Start Date:</strong> <span id="startDateTimeInput">This tournament doesn't have a set start date yet</span></li>
-                <li><strong>End Date:</strong> <span id="endDateTimeInput">This tournament doesn't have an end date set</span></li>
                 <li id="entryFee"><strong>Entry Fee:</strong> <span id="entryFeeAmtInput">0</span></li>
-                <li id="platform"><strong>Platform </strong> <span id="platformInput">0</span></li>
             </ul>
         </section>
 
         <section class="registration">
             <h2>Registration</h2>
-            <ul>
-                <li><strong>Registration Status </strong> <span id="openForRegistrationInput"></span></li>
-                <li id="registrationLockDate"><strong>Registration Lock Date </strong> <span id="registrationLockDateInput"></span></li>
-<!--                 <li id="soloHeadCount"><strong>Solo Head Count: </strong> <span id="soloHeadCountInput">0</span></li>
-                <li id="teamHeadCount"><strong>Team Count </strong> <span id="teamHeadCountInput">0</span></li> -->
-            </ul>
             <div class="registered-users">
-                <h3>Solo Registrations:</h3>
-                <ul id="soloRegistrations">
+                <h3>People Registered for this Tournament:</h3>
+                <ul id="registrants">
                     <!-- Entries of registered users will go here -->
-                </ul>
-                <h3>Team Registrations:</h3>
-                <ul id="teamRegistrations">
-                    <!-- Entries of registered teams will go here -->
                 </ul>
             </div>
             <button id="registerButton">Register Now</button>
 
-            <div id="soloRegistrationModal" class="modal">
+<!--             <div id="soloRegistrationModal" class="modal">
                 <div class="modal-content">
                     <span id="closeSoloModal" class="close">&times;</span>
                     <h3>Register for this tournament</h3>
                     <input type="text" id="soloRegistrantName" placeholder="Your name">
                     <button id="submitSoloRegistrant">Submit</button>
                 </div>
-            </div>
+            </div> -->
 
         </section>
     
@@ -87,13 +75,12 @@
             <p id="tourneyRulesInput">This Tournament has No Rules</p>
         </section>
     
-        <!-- ... add other sections similarly ... -->
-    
         <section id="streaming" class="streaming">
             <h2>Streaming</h2>
             <ul>
                 <li><strong>Service:</strong> <span id="streamingServiceInput">There is no streaming service input selected</span></li>
                 <li><strong>Username:</strong> <span id="streamingUserInput">There hasn't been a username given</span></li>
+                <li><strong>Link:</strong><span id="streamingLink">There hasn't been a link provided</span></li>
             </ul>
         </section>
     
