@@ -23,11 +23,11 @@ function createBracket(participants) {
             roundDiv.appendChild(bracketGame);
 
             // Logic for winner determination
-/*             if (parseInt(player1.score) > parseInt(player2.score)) {
+            if (parseInt(player1.score) > parseInt(player2.score)) {
                 winners.push(player1);
             } else {
                 winners.push(player2);
-            } */
+            }
         }
 
         container.appendChild(roundDiv);

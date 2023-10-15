@@ -8,26 +8,10 @@
     font-size: 0;
 }
 
-/* .round {
+.round {
     display: inline-block;
     vertical-align: middle;
-} */
-
-.round{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    width:200px;
-    list-style:none;
-    padding:0;
-  }
-    .round .spacer{ flex-grow:1; }
-    .round .spacer:first-child,
-    .round .spacer:last-child{ flex-grow:.5; }
-  
-    .round .game-spacer{
-      flex-grow:1;
-    }
+}
 
 .winners > div {
     display: inline-block;
@@ -107,31 +91,7 @@
     border-bottom-width: thin;
 }
 
-/* .round .winners:not(:last-child) {
-    margin-bottom: 2rem;
-}
-
-.round .matchups .matchup:not(:last-child) {
-    margin-bottom: 2rem;
-}
-
-.round .connector .merger {
-    height: 3rem;
-}
-
-.round .connector .line {
-    height: 1.5rem;
-}
-
-.finals .connector .merger {
-    height: 3rem;
-}
-
-.finals .connector .line {
-    height: 1.5rem;
-} */
-
-/* .quarterfinals .winners:not(:last-child) {
+.quarterfinals .winners:not(:last-child) {
     margin-bottom: 2rem;
 }
 
@@ -157,10 +117,4 @@
 
 .finals .connector .line {
     height: 1.5rem;
-} */
-
-
-.participant.winner {
-    background-color: #d6e6fc; /* Highlight color for winner */
 }
-

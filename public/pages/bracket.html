@@ -5,6 +5,12 @@
     <title>Tournament Bracket</title>
     <link rel="stylesheet" href="../css/masterStyles.css">
     <link rel="stylesheet" href="../css/bracket.css">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Holtwood+One+SC' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script|Herr+Von+Muellerhoff' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
@@ -23,142 +29,119 @@ firebase.initializeApp(firebaseConfig);
 </script>
 <body>
     <div class="navbar">
-        <a href ="searchPage.html">Find a Tournament</a>
-        <a href="discoverPage.html">Discover Events</a>
-        <a href="upcomingEventPage.html">Upcoming Events</a>
-        <a href="createTournamentPage.html">Create a Tournament</a>
+        <a href="upcomingEvents.html">Upcoming Events</a>
+        <a href="createTournament.html">Create a Tournament</a>
         <a href="logInSignUp.html">Profile</a>
     </div>
-    <div>
-        <div class="bracket">
- <!--            <section class="round quarterfinals">
-                <div class="winners">
-                    <div class="matchups">
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant winner">
-                                    <span>Uno</span>
-                                </div>
-                                <div class="participant">
-                                    <span>Ocho</span>
-                                </div>
+    <div class="bracket">
+        <section class="round quarterfinals">
+            <div class="winners">
+                <div class="matchups">
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant winner">
+                                <span>Uno</span>
                             </div>
-                        </div>
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant">
-                                    <span>Dos</span>
-                                </div>
-                                <div class="participant winner">
-                                    <span>Siete</span>
-                                </div>
+                            <div class="participant">
+                                <span>Ocho</span>
                             </div>
                         </div>
                     </div>
-                    <div class="connector">
-                        <div class="merger"></div>
-                        <div class="line"></div>
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant">
+                                <span>Dos</span>
+                            </div>
+                            <div class="participant winner">
+                                <span>Siete</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="winners">
-                    <div class="matchups">
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant">
-                                    <span>Treis</span>
-                                </div>
-                                <div class="participant winner">
-                                    <span>Seis</span>
-                                </div>
+                <div class="connector">
+                    <div class="merger"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="winners">
+                <div class="matchups">
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant">
+                                <span>Treis</span>
                             </div>
-                        </div>
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant">
-                                    <span>Cuatro</span>
-                                </div>
-                                <div class="participant winner">
-                                    <span>Cinco</span>
-                                </div>
+                            <div class="participant winner">
+                                <span>Seis</span>
                             </div>
                         </div>
                     </div>
-                    <div class="connector">
-                        <div class="merger"></div>
-                        <div class="line"></div>
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant">
+                                <span>Cuatro</span>
+                            </div>
+                            <div class="participant winner">
+                                <span>Cinco</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-            <section class="round semifinals">
-                <div class="winners">
-                    <div class="matchups">
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant winner">
-                                    <span>Uno</span>
-                                </div>
-                                <div class="participant">
-                                    <span>Dos</span>
-                                </div>
+                <div class="connector">
+                    <div class="merger"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </section>
+        <section class="round semifinals">
+            <div class="winners">
+                <div class="matchups">
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant winner">
+                                <span>Uno</span>
                             </div>
-                        </div>
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant winner">
-                                    <span>Seis</span>
-                                </div>
-                                <div class="participant">
-                                    <span>Cinco</span>
-                                </div>
+                            <div class="participant">
+                                <span>Dos</span>
                             </div>
                         </div>
                     </div>
-                    <div class="connector">
-                        <div class="merger"></div>
-                        <div class="line"></div>
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant winner">
+                                <span>Seis</span>
+                            </div>
+                            <div class="participant">
+                                <span>Cinco</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-            <section class="round finals">
-                <div class="winners">
-                    <div class="matchups">
-                        <div class="matchup">
-                            <div class="participants">
-                                <div class="participant winner">
-                                    <span>Uno</span>
-                                </div>
-                                <div class="participant">
-                                    <span>Seis</span>
-                                </div>
+                <div class="connector">
+                    <div class="merger"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </section>
+        <section class="round finals">
+            <div class="winners">
+                <div class="matchups">
+                    <div class="matchup">
+                        <div class="participants">
+                            <div class="participant winner">
+                                <span>Uno</span>
+                            </div>
+                            <div class="participant">
+                                <span>Seis</span>
                             </div>
                         </div>
                     </div>
-                    <div class="connector">
-                        <div class="merger"></div>
-                        <div class="line"></div>
-                    </div>
                 </div>
-            </section> -->
-        </div>
-        <button id="createCollection">Create Collection</button>
-        
-        
+                <div class="connector">
+                    <div class="merger"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </section>
     </div>
-    <script>
-        const db = firebase.firestore();
-        document.getElementById('createCollection').addEventListener('click', function() {
-            // Create a dummy document in a new collection called 'dummyCollection'
-            db.collection('dummyCollection').add({
-                dummyField: 'dummyValue'
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
-        });
-    </script>
-    <!--<script src="../js/bracket.js"></script>-->
 </body>
 </html>
