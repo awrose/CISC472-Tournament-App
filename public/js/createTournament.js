@@ -71,14 +71,14 @@ form.addEventListener('submit', async function(event){
     event.preventDefault();
     
     await db.collection("tournaments").add({
-        name: getValue('tourneyNameInput', 'This Tournament has no Description'),
+        
+        name: getValue('tourneyNameInput', 'This Tournament has no name'),
         description: getValue('tourneyDescriptInput', 'This Tournament has no Description'),
         rules: getValue('tourneyRulesInput', 'This Tournament has No Rules'),
         startDate: getValue('startDateTimeInput', 'This tournament doesn\'t have a set start date yet'),
         endDate: getValue('endDateTimeInput', 'This tournament doesn\'t have an end date set'),
         primaryEmail: getValue('emailInput', 'no email provided'),
         game: getValue('gameNameSelect', getValue('manualInputGame','There is no game selected yet')),
-        type: getValue('tourneyTypeSelect', 'This tournament doesn\'t have a selected type'),
         online: getCheckboxValue('onlineCheckbox'),
         streaming: getCheckboxValue('streamingCheckbox'),
         streamingService: getValue('streamingServiceInput', 'There is no streaming service input selected'),
@@ -88,8 +88,6 @@ form.addEventListener('submit', async function(event){
         entryFeeAmt: getValue('entryFeeAmtInput', 0),
         prizes: getCheckboxValue('prizesCheckbox'),
         prizesDescript: getValue('prizeDescriptionInput', 'There are no prizes for this tournament'),
-        public: getCheckboxValue('publicTourneyCheckbox'),
-        autoGenerateBrackets: getCheckboxValue('autoGenerateBracketsCheckbox'),
         createdBy: {
             uid: userUid,
             email: userEmail,
@@ -101,10 +99,11 @@ form.addEventListener('submit', async function(event){
     .then(async (docRef) => {
         const userTournamentsRef = db.collection("users").doc(userUid).collection('createdTournaments')
         await userTournamentsRef.add({
-            tournamentId: docRef.id
+            tournamentIds: firebase.firestore.FieldValue.arrayUnion(docRef.id)
         })
         window.location.href = "/pages/tournament.html?id=" + docRef.id;
     }).catch((error) => {
+        console.log(userUid);
         console.log("Error adding document: ", error);
     });
 });

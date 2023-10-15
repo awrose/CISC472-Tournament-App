@@ -5,7 +5,22 @@
     <title>Tournament Bracket</title>
     <link rel="stylesheet" href="../css/masterStyles.css">
     <link rel="stylesheet" href="../css/bracket.css">
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
 </head>
+<script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyBnyJ1v1LaFAan_gaf-pbsnqqnbzLFXME8",
+    authDomain: "cisc472-tournament-app.firebaseapp.com",
+    projectId: "cisc472-tournament-app",
+    storageBucket: "cisc472-tournament-app.appspot.com",
+    messagingSenderId: "77193216760",
+    appId: "1:77193216760:web:50cfd95392f1bc8cb4710d"
+};
+
+firebase.initializeApp(firebaseConfig);
+</script>
 <body>
     <div class="navbar">
         <a href ="searchPage.html">Find a Tournament</a>
@@ -125,9 +140,25 @@
                 </div>
             </section> -->
         </div>
+        <button id="createCollection">Create Collection</button>
         
         
     </div>
-    <script src="../js/bracket.js"></script>
+    <script>
+        const db = firebase.firestore();
+        document.getElementById('createCollection').addEventListener('click', function() {
+            // Create a dummy document in a new collection called 'dummyCollection'
+            db.collection('dummyCollection').add({
+                dummyField: 'dummyValue'
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+        });
+    </script>
+    <!--<script src="../js/bracket.js"></script>-->
 </body>
 </html>

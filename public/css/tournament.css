@@ -102,5 +102,19 @@ li > strong {
     float:right;
 }
 
+.registrant-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
 
-
+/* Styling for the registrant's information */
+.registrant-info strong {
+    display: block;
+    margin-bottom: 5px;
+}

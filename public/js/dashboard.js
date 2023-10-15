@@ -42,6 +42,10 @@ function openTab(tabId, elmnt) {
 
 document.getElementsByClassName("tablink")[0].click();
 
+document.getElementById('returnToPreview').addEventListener('click', function() {
+    window.location.href = `tournament.html?id=${tournamentId}`;
+});
+
 
 if (tournamentId) {
     db.collection("tournaments").doc(tournamentId).get().then((doc) => {
@@ -90,6 +94,7 @@ function getCheckboxValue(id){
     return checkbox ? checkbox.checked : false;
 }
 
+
 document.getElementById("tournamentForm").addEventListener('submit', function(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -118,11 +123,24 @@ document.getElementById("tournamentForm").addEventListener('submit', function(ev
 
     db.collection("tournaments").doc(tournamentId).update(updatedData).then(() => {
         alert("Tournament updated successfully!");
+        window.location.href = `tournament.html?id=${tournamentId}`;
     }).catch((error) => {
         console.log("Error updating document: ", error);
     });
 });
 
+document.getElementById('deleteTournament').addEventListener('click', function() {
+    if (confirm('Are you sure you want to delete this tournament? This action cannot be undone.')) {
+        db.collection('tournaments').doc(tournamentId).delete()
+            .then(() => {
+                alert('Tournament deleted successfully!');
+                window.location.href = 'upcomingEvents.html';
+            })
+            .catch((error) => {
+                console.error('Error deleting tournament:', error);
+            });
+    }
+});
 
 
 // A function to display the registrants
@@ -165,7 +183,6 @@ function displayRegistrants() {
         console.log("Error getting document:", error);
     });
 }
-3
 
 // Call the display function when the page loads
 //window.onload = console.log('window on load');

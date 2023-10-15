@@ -44,6 +44,9 @@ document.getElementById('signInForm').addEventListener('submit', function(e){
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
+            userCredential.user.reload().then(() => {
+                handleUserState(firebase.auth().currentUser)
+            });
 /*             var user = userCredential.user;
             if(!user.displayName){
                 user.updateProfile({
@@ -106,11 +109,13 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 function handleUserState(user){
+    console.log('handle user state called');
     const formsContainer = document.querySelector('.forms-container');
     const profileContainer = document.getElementById('profile-container');
     
 
     if (user && user.displayName) {
+        console.log('user and user display name');
         const redirectURL = sessionStorage.getItem('redirectTo');
 
         if(redirectURL){
@@ -123,6 +128,7 @@ function handleUserState(user){
         formsContainer.style.display = 'none';
         profileContainer.style.display = 'block';
     } else {
+        console.log('NO DISPLAY NAME');
         profileContainer.style.display = 'none';
         formsContainer.style.display = 'flex';
     }

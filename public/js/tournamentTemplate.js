@@ -5,6 +5,8 @@ let userUid;
 let userEmail;
 let userDisplayName;
 
+var editBtn = document.getElementById('editButton');
+
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
         console.log('user is signed in');
@@ -67,7 +69,6 @@ if(tournamentId){
 
             //=====================DETAILS===================================
             document.getElementById("gameInput").textContent = tournamentData.game;
-            document.getElementById("tourneyTypeSelect").textContent = tournamentData.type;
             const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
             document.getElementById("startDateTimeInput").textContent = new Date(tournamentData.startDate).toLocaleDateString(undefined, options);
             
@@ -79,49 +80,8 @@ if(tournamentId){
                 document.getElementById("entryFee").style.display = 'none';
             }
 
-/*             if(tournamentData.online){
-                console.log('this tournament will be online');
-                document.getElementById("platformInput").textContent = tournamentData.onlinePlatform;
-            }else{
-                console.log('this tournament will be in person/location hasnt been set yet');
-                document.getElementById('platform').style.display = 'none';
-            } */
-            
-
-            //============================registration==========================
-/*             if(tournamentData.openForRegistration){
-                console.log('this tournament is open for registration');
-/*                 if(tournamentData.solo){
-                    console.log('this tournament is a SOLO competition')
-                    document.getElementById("openForRegistrationInput").textContent = "This tournament is open for SOLO registration there are X spots left";
-                    document.getElementById("registrationLockDateInput").textContent = new Date(tournamentData.registrationLockDate);
-                    //document.getElementById("teamHeadCount").style.display = 'none';
-                }else if(tournamentData.teams){
-                    console.log('this tournament is a TEAM BASED comp')
-                    document.getElementById("openForRegistrationInput").textContent = "This tournament is open for TEAM registration there are X spots left";
-                    document.getElementById("registrationLockDateInput").textContent = new Date(tournamentData.registrationLockDate);
-                    //document.getElementById("soloHeadCount").style.display = 'none';
-                }  
-            }else{
-                console.log('this tournament is NOT open for registration');
-                document.getElementById("openForRegistrationInput").textContent = "Tournament Registration is closed";
-                document.getElementById("registrationLockDate").style.display = 'none';
-            } */
-
             console.log('tourney rules' + tournamentData.rules);
             document.getElementById("tourneyRulesInput").textContent = tournamentData.rules;
-
-/*             if(tournamentData.solo){
-                console.log('this tournament is SOLO');
-                document.getElementById("soloHeadCountInput").textContent = tournamentData.openSlots;
-                document.getElementById("teamHeadCount").style.display = 'none';
-            }else if(tournamentData.team){
-                console.log('this tournament is TEAM BASED');
-                document.getElementById("teamHeadCountInput").textContent = tournamentData.openSlots;
-                document.getElementById("soloHeadCount").style.display = 'none';
-            } */
-
-            //figure out registrants
 
             if(tournamentData.prizes){
                 console.log('this tournament has PRIZES');
@@ -140,14 +100,9 @@ if(tournamentId){
             }
 
             const register = document.getElementById("registerButton");
-            //const soloModal = document.getElementById("soloRegistrationModal");
-            //const closeSoloModal = document.getElementById("closeSoloModal");
-            //const registerSolo = document.getElementById("submitSoloRegistrant");
 
             register.addEventListener("click", function(event){
                 console.log('button was clicked');
-                //event.preventDefault();
-                //if(tournamentData.solo){
                     const currentDoc = firebase.firestore().collection("tournaments").doc(tournamentId);
                     currentDoc.update({
                         registrants: firebase.firestore.FieldValue.arrayUnion({
@@ -158,49 +113,27 @@ if(tournamentId){
                     }).then(async () => {
                         const userTournamentsRef = db.collection("users").doc(userUid).collection('registeredTournaments')
                         await userTournamentsRef.add({
-                            tournamentId: tournamentId
+                            tournamentIds: firebase.firestore.FieldValue.arrayUnion(tournamentId)
                         })
                             alert("Success! You have been registered for the tournament!");
                     }).catch((err) => {
                             console.error("Error updating document: ", err);
                             alert("There was an error registering for the tournament please reach out to...");
                     })
-                    //soloModal.style.display = 'none'
                 });
 
-                    //registerSolo.addEventListener("click", function(){
-/*                         const currentDoc = firebase.firestore().collection("tournaments").doc(tournamentId);
-                        const soloRegistrantsName = document.getElementById('soloRegistrantName').value; */
-                        //const soloRegistrantsEmail = document.getElementById('soloRegistrantEmail').value;
+                firebase.auth().onAuthStateChanged(function(user){
+                    if(user && tournamentData.createdBy.uid == userUid){
+                        editBtn.style.display = 'block';
 
-/*                         currentDoc.update({
-                            registrants: firebase.firestore.FieldValue.arrayUnion({
-                                uid: userUid,
-                                name: userDisplayName,
-                                email: userEmail
-                            }).then(() => {
-                                alert("Success! You have been registered for the tournament!");
-                            }).catch((err) => {
-                                console.error("Error updating document: ", error);
-                                alert("There was an error registering for the tournament please reach out to...");
-                            })
-                        })
-                        //soloModal.style.display = 'none'
-                    }); */
-
-/*                     window.addEventListener("click", function(event){
-                        if(event.target == soloModal){
-                            soloModal.style.display = 'none';
-                        }
-                    }); */
-                //}
-
-            //})
-            document.getElementById("editButton").addEventListener('click', function(event) {
-                event.preventDefault();
-
-                window.location.href = "/pages/dashboard.html?id=" + tournamentId;
-            });
+                        editBtn.addEventListener('click', function(event) {
+                            event.preventDefault();
+                             window.location.href = "/pages/dashboard.html?id=" + tournamentId;
+                        });
+                    }else{
+                        editBtn.style.display = 'none';
+                    }
+                });
             
         }else{
             console.log("There is no tournament!");

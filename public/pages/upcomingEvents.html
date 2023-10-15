@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events</title>
+    <link rel="stylesheet" href="../css/masterStyles.css">
+    <link rel="stylesheet" href="../css/upcomingEvents.css">
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="upcomingEvents.html">Upcoming Events</a>
+        <a href="createTournament.html">Create a Tournament</a>
+        <a href="logInSignUp.html">Profile</a>
+    </div>
+    <div class="dashboard">
+        <h1>Upcoming Events Dashboard</h1>
+    
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('registered')">Registered Tournaments</button>
+            <button class="tab-button" onclick="showTab('created')">Created Tournaments</button>
+        </div>
+    
+        <div id="registered" class="tournaments-section active-tab">
+            <div class="tournaments"></div>
+        </div>
+    
+        <div id="created" class="tournaments-section">
+            <div class="tournaments"></div>
+        </div>
+    </div>
+    
+
+    <script src="../js/firebaseInit.js"></script>
+    <script src="../js/upcomingEvents.js"></script>
+</body>
+
+</html>

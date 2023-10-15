@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.dashboard {
+    width: 80%;
+    margin: 2em auto;
+}
+
+.tournaments-section {
+    margin: 2em 0;
+}
+
+.tournaments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.tournament-block {
+    border: 1px solid #ddd;
+    padding: 1em;
+    width: calc(33% - 1em); /* Roughly one third, adjusting for gap */
+}
+
+.tournament-block a {
+    text-decoration: none;
+    color: #333;
+}
+
+.tournament-block h3 {
+    margin-top: 0;
+}
+
+.tournament-block p {
+    margin: 0.5em 0;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1em;
+}
+
+.tab-button {
+    padding: 1em 2em;
+    border: none;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-button.active {
+    background-color: #ddd;
+}
+
+.tournaments-section {
+    display: none; /* Initially hide all sections */
+}
+
+.active-tab {
+    display: block;
+}
