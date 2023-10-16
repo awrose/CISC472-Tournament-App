@@ -8,10 +8,11 @@
     font-size: 0;
 }
 
-.round {
+/* .round {
     display: inline-block;
     vertical-align: middle;
-}
+    margin-bottom: 2rem;
+} */
 
 .winners > div {
     display: inline-block;
@@ -91,30 +92,45 @@
     border-bottom-width: thin;
 }
 
-.quarterfinals .winners:not(:last-child) {
+.round{
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2rem;
+    margin-right: 20px;
+}
+
+.round .winners:not(:last-child){
     margin-bottom: 2rem;
 }
 
-.quarterfinals .matchups .matchup:not(:last-child) {
+.round .matchups .matchup:not(:last-child){
     margin-bottom: 2rem;
 }
 
-.semifinals .winners .matchups .matchup:not(:last-child) {
-    margin-bottom: 10rem;
+/* .round-0 .winners:not(:last-child){
+    margin-bottom: 2rem;
+} */
+
+/* .round-0 .matchups .matchup:not(:last-child){
+    margin-bottom: 2rem;
+} */
+
+/* Set a base margin, and adjust it based on the data-matchups attribute */
+.winners[data-matchups='1'] {
+    margin-bottom: 0;
 }
 
-.semifinals .connector .merger {
-    height: 16rem;
+.winners[data-matchups='2'] {
+    margin-bottom: 2rem;
 }
 
-.semifinals .connector .line {
-    height: 8rem;
+.winners[data-matchups='4'] {
+    margin-bottom: 6rem;
 }
 
-.finals .connector .merger {
-    height: 3rem;
+.winners[data-matchups='8'] {
+    margin-bottom: 12rem;
 }
 
-.finals .connector .line {
-    height: 1.5rem;
-}
+/* ... and so on, increasing the margin as necessary */
+
