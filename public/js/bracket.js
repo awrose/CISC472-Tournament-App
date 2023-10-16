@@ -1,8 +1,15 @@
+const db = firebase.firestore();
+
 const participants = ["Uno", "Dos", "Tres", "Cuatro", "cinco", "seis", "siete", "ocho"]; // This list can be of any length
 
 function createBracket(participants) {
+    const container = document.createElement('div');
+    container.classList.add('bracket-container');
+
     const bracket = document.createElement('div');
     bracket.classList.add('bracket');
+
+    container.appendChild(bracket);
 
     const totalRounds = Math.ceil(Math.log2(participants.length));
 
@@ -32,80 +39,81 @@ function createBracket(participants) {
         matchupsCount /= 2;  // Halve the matchups for the next round
     }
 
-    document.body.appendChild(bracket);
+    //document.body.appendChild(bracket);
+
+    const winnerDisplay = document.createElement('div');
+    winnerDisplay.id = 'winner-display';
+    winnerDisplay.classList.add('winner-display');
+    container.appendChild(winnerDisplay);
+
+    document.body.appendChild(container);
 }
 
 let lastSelected = {};
 
 document.body.addEventListener('click', function(e) {
-    console.log('a participant was clicked')
-    if (e.target && e.target.parentElement.classList.contains('participant') && e.target.tagName === 'SPAN') {
-        const participantDiv = e.target.parentElement;
-        console.log(participantDiv.id);
-        const clickedParticipant = e.target.parentElement;
-        //console.log(clickedParticipant);
+    console.log('a participant was clicked');
+    let clickedParticipant;
+
+    if (e.target.classList.contains('participant')) {
+        clickedParticipant = e.target;
+    } else if (e.target.parentElement.classList.contains('participant') && e.target.tagName === 'SPAN') {
+        clickedParticipant = e.target.parentElement;
+    }
+
+    if (clickedParticipant) {
         const matchup = clickedParticipant.closest('.matchup');
-        //console.log(matchup);
 
-        // If another participant from this matchup was selected before, revert that selection
-/*         console.log(lastSelected[matchup]);
-        if (lastSelected[matchup] && lastSelected[matchup] !== clickedParticipant) {
-            //console.log('calling reverting');
-            //console.log('reverting');
-            revertSelection(lastSelected[matchup]);
-        } */ 
-    
-        console.log(lastSelected[matchup]);
+        const nextRoundSpotForClicked = findNextRoundSpotPreviouslyOccupiedBy(clickedParticipant);
 
-/*         if(areInSameMatchup(clickedParticipant.id, lastSelected[matchup].id)){
-            console.log('in the same matchup');
-            revertSelection(lastSelected[matchup]);
-        } */
+        if (nextRoundSpotForClicked) {
+            // The clicked participant is already in the next round. Revert.
+            clickedParticipant.classList.remove('selected');  // Remove the selected class
+            nextRoundSpotForClicked.innerHTML = '';
+        } else {
+            // The clicked participant is not in the next round. Move them.
 
-        // Clear potential existing spot in the next round for the clicked participant
-        const nextSpot = findNextRoundSpotPreviouslyOccupiedBy(clickedParticipant);
-        //console.log(nextSpot);
-        if (nextSpot) nextSpot.innerHTML = '';
+            // Clear potential existing spot in the next round for the clicked participant
+            const nextSpot = findNextRoundSpotPreviouslyOccupiedBy(clickedParticipant);
+            if (nextSpot) nextSpot.innerHTML = '';
 
-        // Move the clicked participant to the next round
-        if (moveToNextRound(clickedParticipant)) {
-            // If moveToNextRound is successful, remember the current selection
-            lastSelected[matchup] = clickedParticipant;
+            // Check if the other participant from the same matchup is in the next round
+            const otherParticipant = Array.from(matchup.getElementsByClassName('participant')).find(p => p !== clickedParticipant);
+            const nextSpotForOther = findNextRoundSpotPreviouslyOccupiedBy(otherParticipant);
+            if (nextSpotForOther) {
+                otherParticipant.classList.remove('selected');  // Remove the selected class from the other participant
+                nextSpotForOther.innerHTML = '';
+            }
+
+            // Move the clicked participant to the next round
+            if (moveToNextRound(clickedParticipant)) {
+                // If moveToNextRound is successful, remember the current selection
+                clickedParticipant.classList.add('selected');  // Add the selected class
+                lastSelected[matchup] = clickedParticipant;
+            }
+
+            // After moving to the next round, check if the participant is in the final round
+            const currentRound = clickedParticipant.closest('.round');
+            const nextRound = currentRound.nextElementSibling;
+
+            if (!nextRound) {  // If there is no next round, it means the current round is the final round
+                const winnerDisplay = document.getElementById('winner-display');
+                winnerDisplay.innerHTML = `<span class="winner-name">${clickedParticipant.textContent}</span>`;
+            }
         }
     }
 });
 
-function areInSameMatchup(id1, id2) {
-    // Extract the matchup part from the ID
-    const matchupId1 = id1.substring(0, id1.lastIndexOf('-'));
-    const matchupId2 = id2.substring(0, id2.lastIndexOf('-'));
-    
-    return matchupId1 === matchupId2;
-}
-
-
-function revertSelection(participant) {
-    console.log('reverting')
-    const nextRoundSpot = findNextRoundSpotPreviouslyOccupiedBy(participant);
-    if (nextRoundSpot) {
-        nextRoundSpot.innerHTML = '';  // Clear the spot
-    }
-}
-
-//... other functions
 
 function moveToNextRound(participant) {
-    // First, clear the potential spot of any existing participant from the same matchup
-    //clearNextRoundSpotOfSameMatchup(participant);
-    
-    // Then, move the current participant to the next round
     const nextRoundSpot = findNextAvailableRoundSpotFor(participant);
-    if (nextRoundSpot && !nextRoundSpot.innerHTML.trim()) {
+    if (nextRoundSpot && !nextRoundSpot.textContent.trim()) { // Check if the spot is empty
         nextRoundSpot.innerHTML = `<span>${participant.textContent}</span>`;
         return true;
     }
     return false;
 }
+
 
 
 function findNextAvailableRoundSpotFor(participant) {
@@ -192,6 +200,55 @@ function normalizeParticipants(participants) {
     }
 
     return participants;
+}
+
+function bracketToJSON() {
+    const rounds = document.querySelectorAll('.bracket .round');
+    const bracketJSON = [];
+
+    rounds.forEach((round, roundIndex) => {
+        bracketJSON[roundIndex] = [];
+        const matchups = round.querySelectorAll('.matchup');
+        matchups.forEach((matchup, matchupIndex) => {
+            const participants = matchup.querySelectorAll('.participant');
+            const matchupJSON = {
+                id: matchup.id,
+                participants: [],
+                winner: null
+            };
+
+            participants.forEach((participant, participantIndex) => {
+                const participantObj = {
+                    id: participant.id,
+                    name: participant.textContent.trim(),
+                    isSelected: participant.classList.contains('selected')
+                };
+                matchupJSON.participants.push(participantObj);
+
+                if (participantObj.isSelected) {
+                    matchupJSON.winner = participantObj.name;
+                }
+            });
+
+            bracketJSON[roundIndex].push(matchupJSON);
+        });
+    });
+
+    return bracketJSON;
+}
+
+function saveBracketToFirestore() {
+    const bracketData = bracketToJSON();
+
+        db.collection("tournaments").doc(tournamentId).set({
+            bracket: bracketData
+        })
+        .then(() => {
+            console.log("Bracket saved for tournament:", tournamentId);
+        })
+        .catch((error) => {
+            console.error("Error saving bracket:", error);
+        });
 }
 
 // Normalize participants and create the bracket

@@ -94,6 +94,8 @@ form.addEventListener('submit', async function(event){
             name: userDisplayName
         },
         registrants: [],
+        status: 'waiting',
+        bracket: {},
     })
 
     .then(async (docRef) => {

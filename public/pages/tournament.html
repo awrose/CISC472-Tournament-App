@@ -15,8 +15,8 @@
         <a href="createTournament.html">Create a Tournament</a>
         <a href="logInSignUp.html">Profile</a>
     </div>
-
-    <section class="countdown-section">
+ 
+    <section id="countdown" class="countdown-section">
         <h2>Countdown to Tournament Start</h2>
         <div id="countdown">
             <span id="days">00</span> days, 
@@ -26,11 +26,17 @@
         </div>
     </section>
 
+    <div>
+        <button class="edit-button" id="startTournament">Start Tournament</button>
+        <button class="edit-button" id="endTournament">End Tournament</button>
+    </div>
+
     <div class="tournament-details">
         <button class="edit-button" id="editButton">Edit Tournament</button>
         <h1 class="tourney-title">Tournament: <span id="tourneyNameInput">This tournament doesn't have a name</span></h1>
         <h4>Organized By: <span id="organizerNameInput"><span id="organizerEmailInput"></span></h4>
 
+        <div id="bracket"></div>
         <section class="description">
             <h2>Description</h2>
             <p id="tourneyDescriptInput">This Tournament has no Description</p>
