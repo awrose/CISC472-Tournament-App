@@ -44,19 +44,23 @@ let latestBracketData = null;
 
 let interval; */
 
+let statusUpdateInterval = null;
+
+
 if(tournamentId){
     db.collection("tournaments").doc(tournamentId).onSnapshot(function(doc){
 
         if(doc.exists){
             var tournamentData = doc.data();
 
-            setInterval(() => {
+            if(statusUpdateInterval) clearInterval(statusUpdateInterval);
+            statusUpdateInterval = setInterval(() => {
                 const status = updateTournamentStatusOnTime(tournamentData);
-
                 if(tournamentData.status !== status){
+                    console.log('weve reached the start date/time');
                     db.collection("tournaments").doc(tournamentId).update({status: status})
                 }
-            }, 60*1000);
+            }, 60*1000)
 
                 if(tournamentData.status === 'waiting'){
                     document.getElementById('startTournament').style.display = 'block';
@@ -69,19 +73,6 @@ if(tournamentId){
                     document.getElementById('countdown').style.display = 'none';
                     document.getElementById('bracket').style.display = 'block';
                     document.getElementById('endTournament').style.display = 'block';
-                const tournamentRef = db.collection("tournaments").doc(tournamentId);
-    
-  /*                   const unsubscribe = tournamentRef.onSnapshot(
-                        (doc) => {
-                            const data = doc.data();
-                    
-                            // Assuming 'renderBracket' is a function that displays the bracket on the page
-                            renderBracket(data.bracket);
-                        },
-                        (error) => {
-                            console.error("Error listening to real-time updates:", error);
-                        }
-                    );  */
                     console.log('this tournament is in progress')
                     
                 }else if(tournamentData.status === 'closed'){
@@ -89,18 +80,6 @@ if(tournamentId){
                     document.getElementById('countdown').style.display = 'none';
                     document.getElementById('bracket').style.display = 'block';
                     document.getElementById('endTournament').style.display = 'none';
-                    const tournamentRef = db.collection("tournaments").doc(tournamentId);
-/*                      const unsubscribe = tournamentRef.onSnapshot(
-                        (doc) => {
-                            const data = doc.data();
-                    
-                            // Assuming 'renderBracket' is a function that displays the bracket on the page
-                            renderBracket(data.bracket);
-                        },
-                        (error) => {
-                            console.error("Error listening to real-time updates:", error);
-                        }
-                    );  */
                     
                     console.log('this tournament is closed');
                 }
@@ -108,6 +87,8 @@ if(tournamentId){
             const startTournamentElem = document.getElementById('startTournament');
             if(startTournamentElem){
                 startTournamentElem.addEventListener('click', function(){
+                    console.log('user clicked start tournament');
+
                     db.collection("tournaments").doc(tournamentId).update({
                         status: 'in progress'
                     })
@@ -117,46 +98,20 @@ if(tournamentId){
             const endTournamentElem = document.getElementById('endTournament');
             if(endTournamentElem){
                 endTournamentElem.addEventListener('click', function(){
-                    //saveBracketToFirestore();
+                    console.log('user clicked end tournament');
+                    //let bracketArr = createBracketArray();
+                    //saveToDb(bracketArr);
                     db.collection("tournaments").doc(tournamentId).update({
-                        status: 'closed'
+                        status: 'closed',
+                        winner: document.getElementById("winner-display").textContent
                     })
                 })
             }
 
-/*             const bracketContainer = document.querySelector('.bracket-container');
-            if(bracketContainer){
-                bracketContainer.addEventListener('click', (e) => {
-                    if(e.target.classList.contains('participant')){
-                        saveBracketToFirestore();
-                    }
-                })
-            }  */
-
-
-
-                console.log(tournamentData.registrants);
-                // No bracket data found, create a new bracket
-                let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
+/*                 let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
                 let normalizedParticipants = normalizeParticipants(participantsInit);
                 let shuffledParticipants = shuffle(normalizedParticipants);
-                createBracket(shuffledParticipants);
-                //saveBracketToFirestore();
-                // Save this new bracket to Firebase here, if necessary
-            
-/*             //if(tournamentData.bracket){
-                console.log('bracket')
-                //createBracketFromFirestoreData(tournamentData.bracket);
-            //}else{
-                let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
-                console.log(participantsInit);
-                let normalizedParticipants = normalizeParticipants(participantsInit);
-                let shuffledParticipants = shuffle(normalizedParticipants);
-                createBracket(shuffledParticipants);
-            //} */
-            
-
-
+                createBracket(shuffledParticipants); */
 
             //=============================countdown==========================
             if(tournamentData.startDate){
@@ -259,13 +214,19 @@ if(tournamentId){
                     }
                 });
 
-/*                 const tournamentRef = db.collection("tournaments").doc(tournamentId);
-                tournamentRef.onSnapshot((doc) => {
-                    const data = doc.data();
-                    if (data.bracket) {
-                        renderBracket(data.bracket); // Your bracket rendering function
+                const bracketElem = document.getElementById('bracket');
+                // Check if bracket is already rendered
+                if (!bracketElem.hasChildNodes()) {
+                    if (tournamentData.bracket && !(Object.keys(tournamentData.bracket).length === 0 && tournamentData.bracket.constructor === Object)) {
+                        console.log('theres a bracket');
+                        renderBracketFromFirestore(tournamentData.bracket, tournamentData.winner);
+                    } else {
+                        let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
+                        let normalizedParticipants = normalizeParticipants(participantsInit);
+                        let shuffledParticipants = shuffle(normalizedParticipants);
+                        createBracket(shuffledParticipants);
                     }
-                }); */
+                }
             
         }else{
             console.log("There is no tournament!");
@@ -282,6 +243,7 @@ function shuffle(array) {
 }
 
 let lastSelected = {}
+let bracketArr = {};
 
 function createBracket(participants) {
     const container = document.createElement('div');
@@ -294,7 +256,7 @@ function createBracket(participants) {
 
     const totalRounds = Math.ceil(Math.log2(participants.length));
 
-    let matchupsCount = participants.length / 2; // Starting matchups count for the first round
+    let matchupsCount = participants.length / 2;
 
     let matchupCounter = 0;
     for (let i = 0; i < totalRounds; i++) {
@@ -344,8 +306,8 @@ function createBracket(participants) {
         }
     
         if (clickedParticipant) {
+            saveToDb();
             const uniqueIdOfClicked = clickedParticipant.dataset.uniqueId;
-            console.log('uniqueIdOfClicked' + uniqueIdOfClicked);
             const matchup = clickedParticipant.closest('.matchup');
     
             const nextRoundSpotForClicked = findNextRoundSpotPreviouslyOccupiedBy(clickedParticipant);
@@ -401,7 +363,6 @@ function transformFirestoreBracketDataToParticipantsArray(bracketData) {
     const participants = [];
     Object.entries(bracketData).forEach(([roundIndex, roundData]) => {
         Object.values(roundData).forEach((matchup) => {
-            // Push each participant's name based on their selected status
             const participant1 = matchup.participants[0];
             const participant2 = matchup.participants[1];
             
@@ -410,7 +371,7 @@ function transformFirestoreBracketDataToParticipantsArray(bracketData) {
             } else if (participant2 && participant2.isSelected) {
                 participants.push(participant2.name);
             } else {
-                participants.push(participant1.name); // Default to the first participant if neither is selected
+                participants.push(participant1.name);
                 if (participant2) participants.push(participant2.name);
             }
         });
@@ -418,6 +379,7 @@ function transformFirestoreBracketDataToParticipantsArray(bracketData) {
 
     return participants;
 }
+
 
 
 
@@ -458,10 +420,6 @@ function findNextAvailableRoundSpotFor(participant) {
 
     return null;
 }
-
-
-
-
 
 function findNextRoundSpotPreviouslyOccupiedBy(participant) {
     const uniqueId = participant.dataset.uniqueId;
@@ -517,6 +475,56 @@ function createMatchup(participant1Name, participant2Name, matchupId) {
     return matchup;
 }
 
+function renderBracketFromFirestore(bracketData, winner) {
+    const bracketElem = document.getElementById('bracket');
+    if (bracketElem) {
+        bracketElem.innerHTML = ''; // Clear out existing bracket
+    }
+    const container = document.createElement('div');
+    container.classList.add('bracket-container');
+    
+    const bracket = document.createElement('div');
+    bracket.classList.add('bracket');
+    container.appendChild(bracket);
+
+    Object.keys(bracketData).forEach(roundIndex => {
+        const round = document.createElement('section');
+        round.classList.add('round', getRoundClass(roundIndex));
+
+        Object.keys(bracketData[roundIndex]).forEach(matchupIndex => {
+            const matchupData = bracketData[roundIndex][matchupIndex];
+            const winners = document.createElement('div');
+            winners.classList.add('winners');
+
+            // For now, this assumes two participants per matchup, which might need to be adjusted for different structures
+            const matchupId = `matchup-${matchupIndex}`;
+            const matchup = createMatchup(
+                matchupData.participants[0].name, 
+                matchupData.participants[1].name, 
+                matchupId
+            );
+
+            // Highlight the participant if isSelected is true
+            if (matchupData.participants[0].isSelected) {
+                matchup.querySelector(`#${matchupId}-participant-a`).classList.add('selected');
+            }
+            if (matchupData.participants[1] && matchupData.participants[1].isSelected) {
+                matchup.querySelector(`#${matchupId}-participant-b`).classList.add('selected');
+            }
+
+            winners.appendChild(matchup);
+            round.appendChild(winners);
+        });
+        bracket.appendChild(round);
+    });
+
+    const winnerDisplay = document.createElement('div');
+    winnerDisplay.id = 'winner-display';
+    winnerDisplay.classList.add('winner-display');
+    winnerDisplay.textContent = winner;
+    container.appendChild(winnerDisplay);
+    bracketElem.appendChild(container);
+}
 
 
 
@@ -540,7 +548,7 @@ function normalizeParticipants(participants) {
     return participants;
 }
 
-function bracketToJSON() {
+/* function bracketToJSON() {
     const rounds = document.querySelectorAll('.bracket .round');
     const bracketJSON = {};
 
@@ -587,7 +595,7 @@ function saveBracketToFirestore() {
     .catch((error) => {
         console.error("Error saving bracket:", error);
     });
-}
+} */
 
 function updateTournamentStatusOnTime(tournamentData){
     const now = new Date();
@@ -604,3 +612,50 @@ function updateTournamentStatusOnTime(tournamentData){
 
 let participantsProgress = {};
 
+function bracketToJSON() {
+    const rounds = document.querySelectorAll('.bracket .round');
+    const bracketJSON = {};
+
+    rounds.forEach((round, roundIndex) => {
+        bracketJSON[roundIndex] = {};
+        const matchups = round.querySelectorAll('.matchup');
+        matchups.forEach((matchup, matchupIndex) => {
+            const participants = matchup.querySelectorAll('.participant');
+            const matchupJSON = {
+                participants: {},
+                winner: null
+            };
+
+            participants.forEach((participant, participantIndex) => {
+                const participantObj = {
+                    id: participant.id,
+                    name: participant.textContent.trim(),
+                    isSelected: participant.classList.contains('selected')
+                };
+                matchupJSON.participants[participantIndex] = participantObj;
+
+                if (participantObj.isSelected) {
+                    matchupJSON.winner = participantObj.name;
+                }
+            });
+
+            bracketJSON[roundIndex][matchupIndex] = matchupJSON;
+        });
+    });
+
+    return bracketJSON;
+}
+
+
+function saveToDb(){
+    const bracketData = bracketToJSON();
+    db.collection("tournaments").doc(tournamentId).update({
+        bracket: bracketData
+    }).then(() => {
+        console.log("Successfully updated Firestore with bracket");
+    }).catch(error => {
+        console.error("Error updating firestore: ", error);
+    })
+}
+
+//winner-display 
