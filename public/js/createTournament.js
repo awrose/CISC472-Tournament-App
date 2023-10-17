@@ -77,7 +77,6 @@ form.addEventListener('submit', async function(event){
         rules: getValue('tourneyRulesInput', 'This Tournament has No Rules'),
         startDate: getValue('startDateTimeInput', 'This tournament doesn\'t have a set start date yet'),
         endDate: getValue('endDateTimeInput', 'This tournament doesn\'t have an end date set'),
-        primaryEmail: getValue('emailInput', 'no email provided'),
         game: getValue('gameNameSelect', getValue('manualInputGame','There is no game selected yet')),
         online: getCheckboxValue('onlineCheckbox'),
         streaming: getCheckboxValue('streamingCheckbox'),

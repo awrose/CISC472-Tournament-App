@@ -23,8 +23,7 @@
     <!-- Tab Titles -->
     <div class="tabs">
         <button class="tablink" onclick="openTab('editTourney', this)">Edit Tourney</button>
-        <button class="tablink" onclick="openTab('registrants', this)">Registrants</button>
-        <button class="tablink" onclick="openTab('bracket', this)">Bracket</button>
+        <button class="tablink" onclick="openTab('participants', this)">Participants</button>
     </div>
 
     <div id="editTourney" class="tabcontent">
@@ -46,10 +45,6 @@
                 <div>
                         <label for="startDateTimeInput">Start Date + Time</label>
                         <input type="datetime-local" id="startDateTimeInput" name="tournament-start" />
-                    </div>
-                    <div>
-                        <label for="emailInput">Primary Contact Email Address</label>
-                        <input type="text" id="emailInput" name="user_email" placeholder="xyz@domain.com" title="xyz@domain.<upper-domain>">
                     </div>
                     <div>
                         <label for="gameNameSelect">Game</label>
@@ -85,17 +80,6 @@
                         <label for="manualInputGame">Don't See the Game You're Looking For?</label>
                         <input type="text" id="manualInputGame" name="manualGame" placeholder="Some Super Cool Game Not Listed">
                     </div>
-                    <div>
-                        <label for="tourneyTypeSelect">Tournament Type</label>
-                        <select name="tourneyType" id="tourneyTypeSelect">
-                            <option value="singleElimination">Single Elimination</option>
-                            <option value="doubleElimination">Double Elimination</option>
-                            <option value="roundRobin">Round Robin</option>
-                            <option value="swiss">Swiss</option>
-                            <option value="leagueFormat">League Format</option>
-                            <option value="freeForAll">Free-for-All</option>
-                        </select>
-                    </div>
                     <div class="checkboxes">
                         <input type="checkbox" id="onlineCheckbox" name="online" value="onlineTourney">
                         <label for="onlineCheckbox">Online Tournament?</label>
@@ -128,14 +112,6 @@
                         <label for="prizeDescriptionInput">Prize Description</label>
                         <textarea id="prizeDescriptionInput" name="prizeDescription" placeholder="Description + Distribution (70% for 1st, 20% for 2nd, 10% for 3rd) of prizes for winners"></textarea>
                     </div>
-                    <div class="checkboxes">
-                        <input type="checkbox" id="publicTourneyCheckbox" name="publicTourney" value="publicTourney">
-                        <label for="publicTourneyCheckbox" style="display:flex">Public?</label>
-                    </div>
-                    <div class="checkboxes">
-                        <input type="checkbox" id="autoGenerateBracketsCheckbox" name="autoGenerate" value="autogenerate">
-                        <label for="autoGenerateBracketsCheckbox" style="display:flex">Auto-generate Brackets?</label>
-                    </div>
                     <button type="submit" id="submitButton">Update Tournament</button> 
                 </form>
                 <button id="deleteTournament">Delete Tournament</button>
@@ -143,7 +119,7 @@
         </div>
     </div>
     
-    <div id="registrants" class="tabcontent">
+    <div id="participants" class="tabcontent">
         <button id="addRegistrantButton">Add Registrant</button>
         <div id="registrantsContainer"></div>
     </div>

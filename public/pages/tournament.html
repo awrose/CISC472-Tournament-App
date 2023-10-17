@@ -26,13 +26,15 @@
         </div>
     </section>
 
-    <div>
+    <div class="display-container">
         <button class="edit-button" id="startTournament">Start Tournament</button>
         <button class="edit-button" id="endTournament">End Tournament</button>
     </div>
 
     <div class="tournament-details">
-        <button class="edit-button" id="editButton">Edit Tournament</button>
+        <div class="display-container">
+            <button class="edit-button" id="editButton">Edit Tournament</button>
+        </div>
         <h1 class="tourney-title">Tournament: <span id="tourneyNameInput">This tournament doesn't have a name</span></h1>
         <h4>Organized By: <span id="organizerNameInput"><span id="organizerEmailInput"></span></h4>
 
@@ -51,17 +53,6 @@
                 <li id="entryFee"><strong>Entry Fee:</strong> <span id="entryFeeAmtInput">0</span></li>
             </ul>
         </section>
-
-<!--         <section class="registration">
-            <h2>Registration</h2>
-            <div class="registered-users">
-                <h3>People Registered for this Tournament:</h3>
-                <div id="registrants">
-                    Entries of registered users will go here 
-                </div>
-            </div>
-            <button id="registerButton">Register Now</button>
-        </section> -->
     
         <section class="rules">
             <h2>Rules</h2>

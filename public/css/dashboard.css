@@ -1,7 +1,19 @@
-/* Tab Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f4fa;
+    color: #595959;
+}
+
+a, button {
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
 .tablink {
-    background-color: #555;
-    color: white;
+    background-color: #e8dcd0; 
+    color: #595959; 
     float: left;
     border: none;
     outline: none;
@@ -13,7 +25,7 @@
 }
 
 .tablink:hover {
-    background-color: #777;
+    background-color: #f7ede2; 
 }
 
 .tabcontent {
@@ -24,61 +36,55 @@
 }
 
 .active-tab {
-    background-color: #ddd;
-    color: black;
+    background-color: #f2d5d0; 
+    color: #595959; 
 }
-
 
 .tabs {
     display: flex;
     justify-content: start;
 }
 
-/* Styles for the registrant-box container */
 .registrant-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e8dcd0; 
     padding: 10px 15px;
     margin: 5px 0;
-    background-color: #f9f9f9;
+    background-color: #f7ede2; 
     border-radius: 5px;
-}
+    }
 
-/* Styling for the registrant's information */
-.registrant-info strong {
-    display: block;
-    margin-bottom: 5px;
-}
+    .registrant-info strong {
+        display: block;
+        margin-bottom: 5px;
+        }
 
-/* Delete button styling */
-.delete-button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
+        .delete-button {
+            background-color: #f2a5b4; 
+            color: #595959; 
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            }
 
-.delete-button:hover {
-    background-color: #c0392b;
-}
-
-
-#returnToPreview, #deleteTournament {
-    margin: 10px;
-    padding: 8px 12px;
-    background-color: #f44336; /* This gives a reddish color, change as needed */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#returnToPreview:hover, #deleteTournament:hover {
-    background-color: #d32f2f; /* Slightly darker shade for hover */
-}
+    .delete-button:hover {
+        background-color: #f7c5c9; 
+        }
+        
+        #returnToPreview, #deleteTournament {
+        margin: 10px;
+        padding: 8px 12px;
+        background-color: #f2a5b4; 
+        color: #595959; 
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+        
+        #returnToPreview:hover, #deleteTournament:hover {
+        background-color: #f7c5c9; 
+        }

@@ -1,4 +1,3 @@
-// Extracting tournamentId from URL
 const db = firebase.firestore();
 
 let userUid;
@@ -52,7 +51,6 @@ if (tournamentId) {
         if (doc.exists) {
             const data = doc.data();
 
-            // Populate form fields using data object
             document.getElementById("tourneyNameInput").value = data.name || '';
             document.getElementById("tourneyDescriptInput").value = data.description || '';
             document.getElementById('tourneyRulesInput').value = data.rules || '';
@@ -105,7 +103,6 @@ document.getElementById("tournamentForm").addEventListener('submit', function(ev
         rules: getValue('tourneyRulesInput', 'This Tournament has No Rules'),
         startDate: getValue('startDateTimeInput', 'This tournament doesn\'t have a set start date yet'),
         endDate: getValue('endDateTimeInput', 'This tournament doesn\'t have an end date set'),
-        primaryEmail: getValue('emailInput', 'no email provided'),
         game: getValue('gameNameSelect', getValue('manualInputGame','There is no game selected yet')),
         type: getValue('tourneyTypeSelect', 'This tournament doesn\'t have a selected type'),
         online: getCheckboxValue('onlineCheckbox'),
@@ -117,8 +114,6 @@ document.getElementById("tournamentForm").addEventListener('submit', function(ev
         entryFeeAmt: getValue('entryFeeAmtInput', 0),
         prizes: getCheckboxValue('prizesCheckbox'),
         prizesDescript: getValue('prizeDescriptionInput', 'There are no prizes for this tournament'),
-        public: getCheckboxValue('publicTourneyCheckbox'),
-        autoGenerateBrackets: getCheckboxValue('autoGenerateBracketsCheckbox'),
     };
 
     db.collection("tournaments").doc(tournamentId).update(updatedData).then(() => {
@@ -143,7 +138,6 @@ document.getElementById('deleteTournament').addEventListener('click', function()
 });
 
 
-// A function to display the registrants
 function displayRegistrants() {
     var registrantsContainer = document.getElementById('registrantsContainer');
     var registrants = [];
@@ -154,9 +148,7 @@ function displayRegistrants() {
             registrants = data.registrants;
             registrantsContainer.innerHTML = '';
 
-            // Loop through each registrant and create HTML
             registrants.forEach(function(registrant) {
-                //console.log(registrant.uid);
                 var registrantBox = document.createElement('div');
                 registrantBox.className = 'registrant-box';
         
@@ -184,8 +176,6 @@ function displayRegistrants() {
     });
 }
 
-// Call the display function when the page loads
-//window.onload = console.log('window on load');
 window.onload = displayRegistrants;
 
 function addNewRegistrant(){

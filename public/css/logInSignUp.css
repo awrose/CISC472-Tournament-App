@@ -1,77 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 body, html {
     height: 100%;
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7fc;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f4fa; 
 }
 
 .auth-container {
     max-width: 500px;
     margin: 0 auto;
     padding: 40px 20px;
-    background-color: #fff;
+    background-color: #f7ede2; 
     border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(182, 193, 216, 0.2); 
     text-align: center;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    position: static;
-    transform: none;
-    min-height:300px;
+    min-height: 300px;
 }
 
 h1 {
     margin-top: 0;
-    color: #333;
+    color: #595959; 
     font-size: 24px;
 }
 
 .forms-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Viewport Height */ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-
-/* ... Your other styles ... */
 
 #profile-container {
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(182, 193, 216, 0.2); 
+    background-color: #f7ede2; 
     text-align: center;
 }
 
 #profile-container h2 {
     font-size: 24px;
-    color: #333;
+    color: #595959; 
     margin-top: 0;
     margin-bottom: 10px;
 }
 
 #profile-container p {
-    color: #555;
+    color: #7a7a7a; 
     font-size: 18px;
 }
 
 #profile-container button {
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
+    background-color: #f2d5d0; 
+    color: #595959; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 #profile-container button:hover {
-    background-color: #0056b3;  /* Darken the color a bit on hover */
+    background-color: #f7c5c9; 
 }
-
-
 

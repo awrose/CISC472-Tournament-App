@@ -30,20 +30,6 @@ console.log(tournamentId);
 
 let latestBracketData = null;
 
-/* function checkIfStartDate(startDate){
-    const now = new Date();
-
-    if(now >= startDate){
-        //document.getElementById('bracket').style.display = 'block';
-        document.getElementById('startTournament').style.display = 'none';
-        document.getElementById('endTournament').style.display = 'block';
-
-        clearInterval(interval);
-    }
-}
-
-let interval; */
-
 let statusUpdateInterval = null;
 
 
@@ -89,9 +75,13 @@ if(tournamentId){
                 startTournamentElem.addEventListener('click', function(){
                     console.log('user clicked start tournament');
 
-                    db.collection("tournaments").doc(tournamentId).update({
-                        status: 'in progress'
-                    })
+                    if(tournamentData.registrants.length <= 0){
+                        alert('There are no registrants! Please have participants join or manually input registrants in the eid tournament section to start the tournament')
+                    }else{
+                        db.collection("tournaments").doc(tournamentId).update({
+                            status: 'in progress'
+                        })
+                    }
                 })
             }
 
@@ -99,8 +89,6 @@ if(tournamentId){
             if(endTournamentElem){
                 endTournamentElem.addEventListener('click', function(){
                     console.log('user clicked end tournament');
-                    //let bracketArr = createBracketArray();
-                    //saveToDb(bracketArr);
                     db.collection("tournaments").doc(tournamentId).update({
                         status: 'closed',
                         winner: document.getElementById("winner-display").textContent
@@ -108,13 +96,8 @@ if(tournamentId){
                 })
             }
 
-/*                 let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
-                let normalizedParticipants = normalizeParticipants(participantsInit);
-                let shuffledParticipants = shuffle(normalizedParticipants);
-                createBracket(shuffledParticipants); */
-
             //=============================countdown==========================
-            if(tournamentData.startDate){
+            if(tournamentData.startDate.value){
                 const startDate = new Date(tournamentData.startDate);
                 function updateCountdown(){
                     const now = new Date();
@@ -130,9 +113,13 @@ if(tournamentId){
                     document.getElementById("minutes").textContent = minutes;
                     document.getElementById("seconds").textContent = seconds;
                 }
+
+                document.getElementById('startTournament').innerText = 'Start Tournament Early';
     
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
+            }else{
+                document.getElementById('countdown').style.display = 'none'
             }
             
             //==========================header==========================================
@@ -204,6 +191,9 @@ if(tournamentId){
                 firebase.auth().onAuthStateChanged(function(user){
                     if(user && tournamentData.createdBy.uid == userUid){
                         editBtn.style.display = 'block';
+                        document.getElementById('startTournament').display = 'block';
+                        document.getElementById('endTournament').display = 'block';
+                        document.getElementById('registerButton').innerText = 'I am participating!'
 
                         editBtn.addEventListener('click', function(event) {
                             event.preventDefault();
@@ -211,20 +201,23 @@ if(tournamentId){
                         });
                     }else{
                         editBtn.style.display = 'none';
+                        document.getElementById('startTournament').display = 'none';
+                        document.getElementById('endTournament').display = 'none';
                     }
                 });
 
                 const bracketElem = document.getElementById('bracket');
-                // Check if bracket is already rendered
-                if (!bracketElem.hasChildNodes()) {
-                    if (tournamentData.bracket && !(Object.keys(tournamentData.bracket).length === 0 && tournamentData.bracket.constructor === Object)) {
-                        console.log('theres a bracket');
-                        renderBracketFromFirestore(tournamentData.bracket, tournamentData.winner);
-                    } else {
-                        let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
-                        let normalizedParticipants = normalizeParticipants(participantsInit);
-                        let shuffledParticipants = shuffle(normalizedParticipants);
-                        createBracket(shuffledParticipants);
+                if(tournamentData.registrants.length > 0){
+                    if (!bracketElem.hasChildNodes()) {
+                        if (tournamentData.bracket && !(Object.keys(tournamentData.bracket).length === 0 && tournamentData.bracket.constructor === Object)) {
+                            console.log('theres a bracket');
+                            renderBracketFromFirestore(tournamentData.bracket, tournamentData.winner);
+                        } else {
+                            let participantsInit = tournamentData.registrants.map(registrant => registrant.name);
+                            let normalizedParticipants = normalizeParticipants(participantsInit);
+                            let shuffledParticipants = shuffle(normalizedParticipants);
+                            createBracket(shuffledParticipants);
+                        }
                     }
                 }
             
@@ -267,7 +260,6 @@ function createBracket(participants) {
             const winners = document.createElement('div');
             winners.classList.add('winners');
 
-            // If it's the first round, use participant names. Otherwise, create empty boxes.
             const participant1Name = (i === 0 && j*2 < participants.length) ? participants[j*2] : null;
             const participant2Name = (i === 0 && (j*2)+1 < participants.length) ? participants[(j*2)+1] : null;
 
@@ -280,17 +272,13 @@ function createBracket(participants) {
 
         bracket.appendChild(round);
 
-        matchupsCount /= 2;  // Halve the matchups for the next round
+        matchupsCount /= 2;  
     }
-
-    //document.body.appendChild(bracket);
 
     const winnerDisplay = document.createElement('div');
     winnerDisplay.id = 'winner-display';
     winnerDisplay.classList.add('winner-display');
     container.appendChild(winnerDisplay);
-
-    //document.body.appendChild(container);
 
     const bracketDiv = document.getElementById('bracket');
     bracketDiv.appendChild(container);
@@ -317,39 +305,25 @@ function createBracket(participants) {
                 clickedParticipant.classList.remove('selected');
                 nextRoundSpotForClicked.innerHTML = '';
             } else {
-/*                 const nextSpot = findNextRoundSpotPreviouslyOccupiedBy(clickedParticipant);
-                if (nextSpot) nextSpot.innerHTML = ''; */
-    
-                // Check if the other participant from the same matchup is in the next round
                 const otherParticipant = Array.from(matchup.getElementsByClassName('participant')).find(p => p !== clickedParticipant);
                 const nextSpotForOther = findNextRoundSpotPreviouslyOccupiedBy(otherParticipant);
                 if (nextSpotForOther) {
-                    otherParticipant.classList.remove('selected');  // Remove the selected class from the other participant
+                    otherParticipant.classList.remove('selected');
                     nextSpotForOther.innerHTML = '';
                 }
     
-                // Move the clicked participant to the next round
                 if (moveToNextRound(clickedParticipant)) {
-                    // If moveToNextRound is successful, remember the current selection
                     clickedParticipant.classList.add('selected');
-                      // Add the selected class
                     console.log(clickedParticipant.id);
                     lastSelected[matchup] = clickedParticipant.id;
-                    //saveBracketToFirestore();
                 }
-    
-                // After moving to the next round, check if the participant is in the final round
                 const currentRound = clickedParticipant.closest('.round');
                 const nextRound = currentRound.nextElementSibling;
     
-                if (!nextRound) {  // If there is no next round, it means the current round is the final round
+                if (!nextRound) {
                     const winnerDisplay = document.getElementById('winner-display');
                     winnerDisplay.innerHTML = `<span class="winner-name">${clickedParticipant.textContent}</span>`;
                 }
-
-                //saveBracketToFirestore();
-
-                //document.getElementById("prizes").style.display = 'none';
 
             }
         }
@@ -385,13 +359,13 @@ function transformFirestoreBracketDataToParticipantsArray(bracketData) {
 
 function moveToNextRound(participant) {
     const nextRoundSpot = findNextAvailableRoundSpotFor(participant);
-    if (nextRoundSpot && !nextRoundSpot.textContent.trim()) { // Check if the spot is empty
+    if (nextRoundSpot && !nextRoundSpot.textContent.trim()) { 
         nextRoundSpot.innerHTML = `<span>${participant.textContent}</span>`;
-        console.log("Participant moved:", participant.textContent); // Add this log
-        nextRoundSpot.dataset.uniqueId = participant.dataset.uniqueId;  // Copy the unique ID to the next round's div
+        console.log("Participant moved:", participant.textContent); 
+        nextRoundSpot.dataset.uniqueId = participant.dataset.uniqueId;  
         return true;
     }
-    console.log("Failed to move participant:", participant.textContent); // Add this log
+    console.log("Failed to move participant:", participant.textContent); 
     return false;
 }
 
@@ -437,12 +411,11 @@ function createParticipantDiv(name, matchupId, position) {
     const participant = document.createElement('div');
     participant.classList.add('participant');
     
-    // Giving the participant an ID based on its parent matchup's ID and its position ('a' or 'b')
     participant.id = `${matchupId}-participant-${position}`;
 
     participant.dataset.uniqueId = `${matchupId}-${name}`
 
-    if (name) { // Check if name exists
+    if (name) {
         participant.innerHTML = `<span>${name}</span>`;
     }
 
@@ -478,7 +451,7 @@ function createMatchup(participant1Name, participant2Name, matchupId) {
 function renderBracketFromFirestore(bracketData, winner) {
     const bracketElem = document.getElementById('bracket');
     if (bracketElem) {
-        bracketElem.innerHTML = ''; // Clear out existing bracket
+        bracketElem.innerHTML = ''; 
     }
     const container = document.createElement('div');
     container.classList.add('bracket-container');
@@ -496,7 +469,6 @@ function renderBracketFromFirestore(bracketData, winner) {
             const winners = document.createElement('div');
             winners.classList.add('winners');
 
-            // For now, this assumes two participants per matchup, which might need to be adjusted for different structures
             const matchupId = `matchup-${matchupIndex}`;
             const matchup = createMatchup(
                 matchupData.participants[0].name, 
@@ -504,7 +476,6 @@ function renderBracketFromFirestore(bracketData, winner) {
                 matchupId
             );
 
-            // Highlight the participant if isSelected is true
             if (matchupData.participants[0].isSelected) {
                 matchup.querySelector(`#${matchupId}-participant-a`).classList.add('selected');
             }
@@ -542,60 +513,12 @@ function normalizeParticipants(participants) {
     }
 
     while (participants.length < powerOf2) {
-        participants.push("Bye");  // Placeholder for a free pass to the next round
+        participants.push("Bye");
     }
 
     return participants;
 }
 
-/* function bracketToJSON() {
-    const rounds = document.querySelectorAll('.bracket .round');
-    const bracketJSON = {};
-
-    rounds.forEach((round, roundIndex) => {
-        bracketJSON[roundIndex] = {};
-        const matchups = round.querySelectorAll('.matchup');
-        matchups.forEach((matchup, matchupIndex) => {
-            const participants = matchup.querySelectorAll('.participant');
-            const matchupJSON = {
-                participants: {},
-                winner: null
-            };
-
-            participants.forEach((participant, participantIndex) => {
-                const participantObj = {
-                    id: participant.id,
-                    name: participant.textContent.trim(),
-                    isSelected: participant.classList.contains('selected')
-                };
-                matchupJSON.participants[participantIndex] = participantObj;
-
-                if (participantObj.isSelected) {
-                    matchupJSON.winner = participantObj.name;
-                }
-            });
-
-            bracketJSON[roundIndex][matchupIndex] = matchupJSON;
-        });
-    });
-
-    return bracketJSON;
-}
-
-
-function saveBracketToFirestore() {
-    const bracketData = bracketToJSON();
-
-    db.collection("tournaments").doc(tournamentId).update({
-        bracket: bracketData
-    })
-    .then(() => {
-        console.log("Bracket saved for tournament:", tournamentId);
-    })
-    .catch((error) => {
-        console.error("Error saving bracket:", error);
-    });
-} */
 
 function updateTournamentStatusOnTime(tournamentData){
     const now = new Date();
@@ -657,5 +580,3 @@ function saveToDb(){
         console.error("Error updating firestore: ", error);
     })
 }
-
-//winner-display 

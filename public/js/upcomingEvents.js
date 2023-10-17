@@ -7,7 +7,6 @@ function fetchAndDisplayTournaments() {
 }
 
 function fetchTournamentsFromSubCollection(userUid, subCollectionName, container) {
-    //console.log('fetching tournaments from sub collection');
     db.collection('users').doc(userUid).collection(subCollectionName).get()
         .then(querySnapshot => {
             const fetchPromises = [];
@@ -64,7 +63,7 @@ function createTournamentBlock(tournamentData) {
 
     const title = document.createElement('h3');
     const titleLink = document.createElement('a');
-    titleLink.href = `tournament.html?id=${tournamentData.id}`; // Adjust the link as needed
+    titleLink.href = `tournament.html?id=${tournamentData.id}`; 
     titleLink.textContent = tournamentData.name;
     title.appendChild(titleLink);
 
@@ -81,7 +80,7 @@ function createTournamentBlock(tournamentData) {
     return block;
 }
 
-// Function to handle tab switching
+
 function showTab(tabName) {
     const sections = document.querySelectorAll('.tournaments-section');
     sections.forEach(section => {
@@ -102,12 +101,11 @@ function showTab(tabName) {
     }
 }
 
-// When Firebase auth state changes, fetch and display the tournaments if the user is signed in
 firebase.auth().onAuthStateChanged(user => {
     if (user) fetchAndDisplayTournaments();
 });
 
-// Default tab display on load
+
 document.addEventListener('DOMContentLoaded', function() {
     showTab('registered');
 });

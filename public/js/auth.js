@@ -11,25 +11,18 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            // Update the user's display name after successful registration
             var user = userCredential.user;
-
-            //formsContainer.style.display = 'none';
-            //profileContainer.style.display = 'block';
-
             return user.updateProfile({
                 displayName: name
             }).then(() => {
                 console.log('just updated the profile');
                 handleUserState(user);
-                //window.location.
             });
 
         })
         .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            // Handle the error as needed, perhaps show a message to the user
         });
 })
 
@@ -47,28 +40,14 @@ document.getElementById('signInForm').addEventListener('submit', function(e){
             userCredential.user.reload().then(() => {
                 handleUserState(firebase.auth().currentUser)
             });
-/*             var user = userCredential.user;
-            if(!user.displayName){
-                user.updateProfile({
-                    displayName: regNameInput
-                }).then(function(){
-                    console.log('Display name updated succesfully');
-                }).catch(function(error){
-                    console.log('Error updating display name');
-                })
-            } */
-
-            //document.getElementById('registerForm').reset();
-            //document.getElementById('signInForm').reset();
         })
         .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            // Handle the error as needed
         });
 })
 
-// Display Profile Function
+
 function displayUserProfile(user) {
     const profileContainer = document.getElementById('profile-container');
     profileContainer.style.display = 'block';
@@ -76,7 +55,7 @@ function displayUserProfile(user) {
     document.getElementById('user-email').textContent = user.email;
 }
 
-// Log Out Function
+
 function logOut() {
     firebase.auth().signOut();
 
@@ -103,7 +82,6 @@ document.getElementById('forgotPassword').addEventListener('click', function(eve
     })
 })
 
-// Authentication State Logic
 firebase.auth().onAuthStateChanged(user => {
     handleUserState(user);
 });

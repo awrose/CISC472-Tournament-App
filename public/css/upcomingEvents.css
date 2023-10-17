@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F2F4FA; 
+    color: #5C5C5C; 
 }
 
 .dashboard {
@@ -18,18 +22,21 @@ body {
 }
 
 .tournament-block {
-    border: 1px solid #ddd;
+    border: 1px solid #D6EAF8; 
     padding: 1em;
-    width: calc(33% - 1em); /* Roughly one third, adjusting for gap */
+    width: calc(33% - 1em);
+    background-color: #FEF9E7; 
+    border-radius: 8px; 
 }
 
 .tournament-block a {
     text-decoration: none;
-    color: #333;
+    color: #5C5C5C; 
 }
 
 .tournament-block h3 {
     margin-top: 0;
+    color: #A8D5E2; 
 }
 
 .tournament-block p {
@@ -38,24 +45,24 @@ body {
 
 .tabs {
     display: flex;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #D6EAF8; 
     margin-bottom: 1em;
 }
 
 .tab-button {
     padding: 1em 2em;
     border: none;
-    background-color: #f5f5f5;
+    background-color: #FADADD; 
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.tab-button.active {
-    background-color: #ddd;
+.tab-button.active, .tab-button:hover {
+    background-color: #E6B0AA; 
 }
 
 .tournaments-section {
-    display: none; /* Initially hide all sections */
+    display: none; 
 }
 
 .active-tab {
