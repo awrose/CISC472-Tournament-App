@@ -180,7 +180,7 @@ window.onload = displayRegistrants;
 
 function addNewRegistrant(){
     const name = prompt('Enter registrant\'s name: ');
-    const email = prompt('Enter registrant\'s emai:');
+    const email = prompt('Enter registrant\'s email:');
 
     if(name && email){
         const id = "ID_" + Date.now();
